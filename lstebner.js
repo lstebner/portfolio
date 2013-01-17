@@ -93,6 +93,7 @@ app.post('/contact-submit', function(req, res){
   //send me the message
   transport.sendMail(message_data, function(err, msg){
     if (err){
+      console.log('sendMail error: ' + err);
       done(true, 'Error sending message, please try again.');
     }
     else{
