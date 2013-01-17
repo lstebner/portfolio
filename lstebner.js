@@ -96,7 +96,9 @@ function single_page(req, res, uri, view_data){
 }
 
 app.get('/', function(req, res){
-    listing_page(req, res);
+  res.render('index', {
+    title: 'Luke Stebner'
+  });
 });
 
 app.get('/:uri', function(req, res){

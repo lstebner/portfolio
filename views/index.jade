@@ -1,5 +1,221 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+    #header
+        .container
+            .row
+                .twelvecol
+                    h1
+                        a(href="/") Luke Stebner,
+                    h2 Frontend Developer
+            .row
+                .onecol|&nbsp;
+                .tencol
+                    ul.showcase-skills
+                        li.js
+                        li.php
+                        li.html
+                        li.less
+
+    #work
+        .container
+            .row
+                .twelvecol
+                    h2 My Work
+
+            .row.first
+                .eightcol
+                    .example
+                        img(src="http://placehold.it/748x401")
+
+                .fourcol.last
+                    .description
+                        h3 My Brick Builds
+                        a(href="http://mybrickbuilds.com") http://mybrickbuilds.com
+                        p Are ya'll okay man?' i'ma get on this TV they don't know what we been through. Made to make !%*!#s fail excuse my French but I'm in France (I'm just sayin'). You bringin' out a side of me that I dont know. 'wassup wit you a Jay man & !%*!# a bus. And show me why you deserve to have it all.
+
+                        h3 Technology
+                        ul.technology
+                            li Node
+                            li LESS
+                            li Jade
+                            li Awesomesauce
+
+            .row
+                .eightcol
+                    .example
+                        img(src="http://placehold.it/748x401")
+
+                .fourcol.last
+                    .description
+                        h3 10 Dollar Gaming
+                        a(href="http://10dollargaming.com") http://10dollargaming.com
+                        p Are ya'll okay man?' i'ma get on this TV they don't know what we been through. Made to make !%*!#s fail excuse my French but I'm in France (I'm just sayin'). You bringin' out a side of me that I dont know. 'wassup wit you a Jay man & !%*!# a bus. And show me why you deserve to have it all.
+
+                        h3 Technology
+                        ul.technology
+                            li Node
+                            li LESS
+                            li Jade
+                            li Awesomesauce
+
+            .row
+                .eightcol
+                    .example
+                        img(src="http://placehold.it/748x401")
+
+                .fourcol.last
+                    .description
+                        h3 SelectVids
+                        a(href="http://selectvids.com") http://selectvids.com
+                        p Are ya'll okay man?' i'ma get on this TV they don't know what we been through. Made to make !%*!#s fail excuse my French but I'm in France (I'm just sayin'). You bringin' out a side of me that I dont know. 'wassup wit you a Jay man & !%*!# a bus. And show me why you deserve to have it all.
+
+                        h3 Technology
+                        ul.technology
+                            li Node
+                            li LESS
+                            li Jade
+                            li Awesomesauce
+
+            .row
+                .eightcol
+                    .example
+                        img(src="http://placehold.it/748x401")
+
+                .fourcol.last
+                    .description
+                        h3 KanyeIpsum
+                        a(href="http://kanyeipsum.me") http://kanyeipsum.me
+                        p Are ya'll okay man?' i'ma get on this TV they don't know what we been through. Made to make !%*!#s fail excuse my French but I'm in France (I'm just sayin'). You bringin' out a side of me that I dont know. 'wassup wit you a Jay man & !%*!# a bus. And show me why you deserve to have it all.
+
+                        h3 Technology
+                        ul.technology
+                            li Node
+                            li LESS
+                            li Jade
+                            li Awesomesauce
+
+            .row
+                .eightcol
+                    .example
+                        img(src="http://placehold.it/748x401")
+
+                .fourcol.last
+                    .description
+                        h3 Track a Goal
+                        a(href="http://trackagoal.com") http://trackagoal.com
+                        p Are ya'll okay man?' i'ma get on this TV they don't know what we been through. Made to make !%*!#s fail excuse my French but I'm in France (I'm just sayin'). You bringin' out a side of me that I dont know. 'wassup wit you a Jay man & !%*!# a bus. And show me why you deserve to have it all.
+
+                        h3 Technology
+                        ul.technology
+                            li Node
+                            li LESS
+                            li Jade
+                            li Awesomesauce
+
+            .row
+                .eightcol
+                    .example
+                        img(src="http://placehold.it/748x401")
+
+                .fourcol.last
+                    .description
+                        h3 Bello
+                        a(href="http://bello.cow") http://bello.com
+                        p Are ya'll okay man?' i'ma get on this TV they don't know what we been through. Made to make !%*!#s fail excuse my French but I'm in France (I'm just sayin'). You bringin' out a side of me that I dont know. 'wassup wit you a Jay man & !%*!# a bus. And show me why you deserve to have it all.
+
+                        h3 Technology
+                        ul.technology
+                            li Node
+                            li LESS
+                            li Jade
+                            li Awesomesauce
+
+    #footer
+        .container
+            .row
+                .fourcol
+                    h2 Contact Me
+
+                    form#contact-form
+                        input(type="text", placeholder="Your Name", name="name")
+                        input(type="text", placeholder="Email Address", name="email")
+                        textarea(placeholder="Message", name="message")
+                        input(type="submit", value="Send", name="send")
+
+                    ul#social
+                        li.linkedin
+                        li.twitter
+                        li.email
+
+                .fourcol
+                    h2 Articles I've Written
+                    ul.linklist
+                        li
+                            a(href="#") Auto Growing Textarea
+                        li
+                            a(href="#") Article 2
+                        li
+                            a(href="#") Article 3
+                        li
+                            a(href="#") Article 4
+                        li
+                            a(href="#") Article 5
+
+                    h2 Links
+                    ul.linklist
+                        li
+                            a(href="#") Joe
+                        li
+                            a(href="#") Schmoe
+                        li
+                            a(href="#") What
+                        li
+                            a(href="#") Eva
+
+                .fourcol.last
+                    h2 Skills
+                    ul.starlist
+                        li.label
+                            strong Javascript
+                        li.on
+                        li.on
+                        li.on
+                        li.on
+                        li.on
+
+                    ul.starlist
+                        li.label
+                            strong HTML & CSS
+                        li.on
+                        li.on
+                        li.on
+                        li.on
+                        li.on
+
+                    ul.starlist
+                        li.label
+                            strong PHP
+                        li.on
+                        li.on
+                        li.on
+                        li.off
+                        li.off
+
+                    ul.starlist
+                        li.label
+                            strong Databases
+                        li.on
+                        li.on
+                        li.on
+                        li.off
+                        li.off
+
+                    ul.starlist
+                        li.label
+                            strong Photoshop
+                        li.on
+                        li.off
+                        li.off
+                        li.off
+                        li.off

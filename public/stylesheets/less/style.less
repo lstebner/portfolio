@@ -1,0 +1,241 @@
+body{
+    margin:0;
+    font-family: 'Dosis', sans-serif;
+}
+
+
+// placeholder text
+
+@placeholder-color:#d8d8d8;
+
+::-webkit-input-placeholder {
+   color: @placeholder-color;
+}
+
+:-moz-placeholder {
+   color: @placeholder-color;
+}
+
+:-ms-input-placeholder {
+   color: @placeholder-color;
+}
+
+#header{
+    height:394px;
+    background-color:#000;
+    padding-top:40px;
+    background-image:url(/images/header-background-2000.jpg);
+    background-repeat:no-repeat;
+    width:100%;
+    margin:0;
+
+    h1{
+        margin-top:0;
+        color:#fff;
+        font-size:36px;
+        text-align:center;
+
+        a{
+            color:inherit;
+            font-size:inherit;
+            text-decoration:none;
+        }
+    }
+
+    h2{
+        color:#fff;
+        font-size:60px;
+        text-align:center;
+
+        a{
+            color:inherit;
+            font-size:inherit;
+            text-decoration:none;
+        }
+    }
+
+    ul.showcase-skills{
+        margin:0 auto;
+        width:778px;
+
+        li{
+            @size:154px;
+
+            background-repeat:no-repeat;
+            background-image:url(/images/orangcicles.png);
+            width:@size;
+            height:@size;
+            display:block;
+            float:left;
+            text-align:center;
+            font-size:56px;
+            margin:20px;
+
+            &.js{ background-position:0 0; }
+            &.php{ background-position:@size*-1 0; }
+            &.html{ background-position:@size*-2 0; }
+            &.less{ background-position:@size*-3 0; }
+        }
+    }
+
+}
+
+#work{
+    margin-top:20px;
+
+    h2{
+        color:#f00;
+        font-weight:600;
+        font-size:36px;
+    }
+
+    .example{
+        margin-top:80px;
+
+        img{
+            border-radius:16px;
+            width:100%;
+        }
+    }
+
+    .description{
+        margin-top:80px;
+
+        h3{
+            font-size:24px;
+            font-weight:400;
+            display:block;
+            margin-top:12px;
+        }
+
+        a{
+            display:block;
+            text-decoration:none;
+        }
+
+        p{
+            font-weight:200;
+            margin:0;
+        }
+
+        ul.technology{
+            li{
+                display:block;
+            }
+        }
+    }
+
+    .row.first{
+        .example, .description{
+            margin-top:20px;
+        }
+    }
+}
+
+#footer{
+    background-color:#d8d8d8;
+    padding:40px;
+    margin-top:80px;
+
+    h2{
+        color:#f00;
+        font-weight:600;
+        font-size:36px;
+        margin-bottom:30px;
+    }
+
+    form{
+        input[type="text"]
+        ,textarea{
+            border-radius:12px;
+            display:block;
+            width:88%;
+            padding:20px;
+            border:1px solid #ddd;
+            margin:20px 0;
+            font-size:16px;
+            font-weight:500;
+        }
+
+        textarea{
+            height:200px;
+        }
+
+        input[type="submit"]{
+            background-color:#467ca1;
+            width:160px;
+            padding:16px;
+            text-align:center;
+            float:right;
+            font-size:24px;
+            color:#fff;
+            font-weight:bold;
+            border-radius:12px;
+        }
+    }
+
+    ul.linklist{
+        list-style-type:none;
+
+        li{
+            margin:8px 0;
+
+            a{
+                font-size:16px;
+                text-decoration:none;
+                font-weight:600;
+                color:#467ca1;
+            }
+        }
+    }
+
+    ul.starlist{
+        list-style-type:none;
+        clear:both;
+
+        li{
+            margin:8px 4px;
+            background-image:url(/images/stars.png);
+            background-repeat:none;
+            background-position:-25px 0;
+            width:24px;
+            height:24px;
+            display:block;
+            float:left;
+
+            &.on{
+                background-position:0 0;
+            }
+
+            &.label{
+                width:120px;
+                background-image:none;
+                font-size:20px;
+                color:#444;
+            }
+        }
+    }
+}
+
+#social{
+    link-style-type:none;
+    padding:0;
+    margin:0;
+
+    li{
+        @size:32px;
+
+        padding:0;
+        margin:20px 5px;
+        background-image:url(/images/social-icons.png);
+        background-repeat:0;
+        display:block;
+        float:left;
+        width:@size;
+        height:@size;
+
+        &.linkedin{ background-position:0 0; }
+        &.twitter{ background-position:-@size 0; }
+        &.email{ background-position:-@size*2 0; }
+    }
+}
