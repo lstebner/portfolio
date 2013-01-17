@@ -2,6 +2,7 @@ body {
   margin: 0;
   font-family: 'Dosis', sans-serif;
   background-color: #f1f1f1;
+  line-height: inherit;
 }
 ::-webkit-input-placeholder {
   color: #d8d8d8;
@@ -43,31 +44,19 @@ body {
   text-decoration: none;
 }
 #header ul.showcase-skills {
-  margin: 0 auto;
-  width: 778px;
+  margin: 0 10%;
+  width: 80%;
 }
 #header ul.showcase-skills li {
-  background-repeat: no-repeat;
-  background-image: url(/images/orangcicles.png);
-  width: 154px;
-  height: 154px;
+  width: 23%;
   display: block;
   float: left;
   text-align: center;
   font-size: 56px;
-  margin: 20px;
+  padding: 1%;
 }
-#header ul.showcase-skills li.js {
-  background-position: 0 0;
-}
-#header ul.showcase-skills li.php {
-  background-position: -154px 0;
-}
-#header ul.showcase-skills li.html {
-  background-position: -308px 0;
-}
-#header ul.showcase-skills li.less {
-  background-position: -462px 0;
+#header ul.showcase-skills li img {
+  width: 100%;
 }
 #header-bottom-cap ul {
   list-style-type: none;

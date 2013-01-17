@@ -15,7 +15,7 @@ var express = require('express')
   , md = require('node-markdown').Markdown
 ;
 
-var cache = require('./cache.js')(models)
+var cache = require('./cache.js')
     ,conf = require('./conf.js')()
 ;
 

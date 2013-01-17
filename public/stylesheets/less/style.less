@@ -2,6 +2,7 @@ body{
     margin:0;
     font-family: 'Dosis', sans-serif;
     background-color:#f1f1f1;
+    line-height:inherit;
 }
 
 
@@ -56,26 +57,20 @@ body{
     }
 
     ul.showcase-skills{
-        margin:0 auto;
-        width:778px;
+        margin:0 10%;
+        width:80%;
 
         li{
-            @size:154px;
-
-            background-repeat:no-repeat;
-            background-image:url(/images/orangcicles.png);
-            width:@size;
-            height:@size;
+            width:23%;
             display:block;
             float:left;
             text-align:center;
             font-size:56px;
-            margin:20px;
+            padding:1%;
 
-            &.js{ background-position:0 0; }
-            &.php{ background-position:@size*-1 0; }
-            &.html{ background-position:@size*-2 0; }
-            &.less{ background-position:@size*-3 0; }
+            img{
+                width:100%;
+            }
         }
     }
 }
