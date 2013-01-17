@@ -68,12 +68,35 @@ body {
 #header ul.showcase-skills li.less {
   background-position: -462px 0;
 }
+#header-bottom-cap ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+#header-bottom-cap ul li {
+  padding: 0;
+  display: block;
+  position: relative;
+  float: left;
+  width: 25%;
+  height: 5px;
+}
+#header-bottom-cap ul li:first-child,
+#header-bottom-cap ul li:last-child {
+  background-color: #ff6600;
+}
+#header-bottom-cap ul li.two {
+  background-color: #a14646;
+}
+#header-bottom-cap ul li.three {
+  background-color: #467ca1;
+}
 #work {
   margin-top: 20px;
 }
 #work h2 {
   color: #f00;
-  font-weight: 600;
+  font-weight: 800;
   font-size: 36px;
 }
 #work .example {
@@ -114,7 +137,7 @@ body {
 }
 #footer h2 {
   color: #f00;
-  font-weight: 600;
+  font-weight: 800;
   font-size: 36px;
   margin-bottom: 30px;
 }

@@ -77,7 +77,27 @@ body{
             &.less{ background-position:@size*-3 0; }
         }
     }
+}
 
+#header-bottom-cap{
+    ul{
+        list-style-type:none;
+        margin:0;
+        padding:0;
+
+        li{
+            padding:0;
+            display:block;
+            position:relative;
+            float:left;
+            width:25%;
+            height:5px;
+
+            &:first-child, &:last-child{ background-color:#ff6600; }
+            &.two{ background-color:#a14646; }
+            &.three{ background-color:#467ca1; }
+        }
+    }
 }
 
 #work{
@@ -85,7 +105,7 @@ body{
 
     h2{
         color:#f00;
-        font-weight:600;
+        font-weight:800;
         font-size:36px;
     }
 
@@ -139,7 +159,7 @@ body{
 
     h2{
         color:#f00;
-        font-weight:600;
+        font-weight:800;
         font-size:36px;
         margin-bottom:30px;
     }
