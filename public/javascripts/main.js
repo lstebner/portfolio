@@ -47,7 +47,7 @@ $(function(){
                             .text(message)
                     ;
 
-                    $alert.closest('form').find('input[type=submit]').removeAttr('disabled');
+                    $alert.closest('form').find('input[type=submit]').val('Try Again').removeAttr('disabled');
                 }
                 //show success message
                 else{
@@ -58,6 +58,11 @@ $(function(){
                         .children('p')
                             .text(message)
                     ;
+
+                    //after 10 seconds, quietly remove the alert
+                    setTimeout(function(){
+                        $('#contact-form .alert').fadeOut(300);
+                    }, 10000);
                 }
 
                 return false;
@@ -78,6 +83,8 @@ $(function(){
         }
         //that's good enough
         else{
+            $(this).find('input[type=submit]').val('Sending...');
+
             $.ajax({
                 type:'post'
                 ,url:'/contact-submit'
@@ -107,6 +114,6 @@ $(function(){
 
         $f.find('.alert').fadeOut(300);
         $f.find('input[type=text],textarea').val('');
-        $f.find('input[type=submit]').text('Send').removeAttr('disabled');
+        $f.find('input[type=submit]').val('Send').removeAttr('disabled');
     }
 });
