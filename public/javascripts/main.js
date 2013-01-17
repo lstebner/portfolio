@@ -90,6 +90,8 @@ $(function(){
                     }
                     //yay
                     else{
+                        reset_contact_form();
+
                         return done(false, 'Message sent!');
                     }
                 }
