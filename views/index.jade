@@ -155,7 +155,9 @@ block content
                 .fourcol
                     h2 Contact Me
 
-                    form#contact-form
+                    form#contact-form(name="contact_form")
+                        .alert(style="display:none;")
+                            p
                         input(type="text", placeholder="Your Name", name="name")
                         input(type="text", placeholder="Email Address", name="email")
                         textarea(placeholder="Message", name="message")

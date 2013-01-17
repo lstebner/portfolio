@@ -47,8 +47,17 @@ app.get('/', function(req, res){
   });
 });
 
-app.get('/:uri', function(req, res){
-    single_page(req, res, req.params.uri);
+app.post('/contact-submit', function(req, res){
+  var data = _.extend({ name:'', email:'', message:'' }, req.body)
+      ,done = function(error, message){
+        res.json({
+          error: error
+          ,message: message
+        });
+      }
+  ;
+
+  done(false, false);
 });
 
 http.createServer(app).listen(app.get('port'), function(){

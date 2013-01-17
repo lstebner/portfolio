@@ -131,6 +131,28 @@ body {
   font-size: 36px;
   margin-bottom: 30px;
 }
+#footer form .alert {
+  border: 1px solid #888;
+  background-color: #ccc;
+}
+#footer form .alert p {
+  margin: 6px 8px;
+  color: #333;
+}
+#footer form .alert.alert-error {
+  border-color: #f00;
+  background-color: #f77;
+}
+#footer form .alert.alert-error p {
+  color: #f00;
+}
+#footer form .alert.alert-success {
+  border-color: #46a173;
+  background-color: #a7d9c0;
+}
+#footer form .alert.alert-success p {
+  color: #46a173;
+}
 #footer form input[type="text"],
 #footer form textarea {
   border-radius: 12px;

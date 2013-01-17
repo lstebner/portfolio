@@ -161,6 +161,30 @@ body{
     }
 
     form{
+        .alert{
+            border:1px solid #888;
+            background-color:#ccc;
+
+            p{
+                margin:6px 8px;
+                color:#333;
+            }
+
+            &.alert-error{
+                border-color:#f00;
+                background-color:#f77;
+
+                p{ color:#f00; }
+            }
+
+            &.alert-success{
+                border-color:#46a173;
+                background-color:#a7d9c0;
+
+                p{ color:#46a173; }
+            }
+        }
+
         input[type="text"]
         ,textarea{
             border-radius:12px;
