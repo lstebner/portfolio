@@ -1,6 +1,7 @@
 body {
   margin: 0;
   font-family: 'Dosis', sans-serif;
+  background-color: #f1f1f1;
 }
 ::-webkit-input-placeholder {
   color: #d8d8d8;
