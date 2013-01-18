@@ -3,6 +3,7 @@ body {
   font-family: 'Dosis', sans-serif;
   background-color: #f1f1f1;
   line-height: inherit;
+  color: #666;
 }
 ::-webkit-input-placeholder {
   color: #d8d8d8;
@@ -85,7 +86,7 @@ body {
   margin-top: 20px;
 }
 #work h2 {
-  color: #f00;
+  color: #a14646;
   font-weight: 800;
   font-size: 36px;
 }
@@ -94,6 +95,8 @@ body {
 }
 #work .example img {
   border-radius: 16px;
+  -moz-border-radius: 16px;
+  -webkit-border-radius: 16px;
   width: 100%;
 }
 #work .description {
@@ -126,7 +129,7 @@ body {
   margin-top: 80px;
 }
 #footer h2 {
-  color: #f00;
+  color: #a14646;
   font-weight: 800;
   font-size: 36px;
   margin-bottom: 30px;
@@ -155,7 +158,9 @@ body {
 }
 #footer form input[type="text"],
 #footer form textarea {
-  border-radius: 12px;
+  border-radius: 8px;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
   display: block;
   width: 88%;
   padding: 20px;
@@ -176,7 +181,9 @@ body {
   font-size: 24px;
   color: #fff;
   font-weight: bold;
-  border-radius: 12px;
+  border-radius: 8px;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
 }
 #footer ul.linklist {
   list-style-type: none;
