@@ -8,6 +8,9 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
 
     script(type="text/javascript", src="/javascripts/min/main.min.js")
+
+    if process.env.NODE_ENV == 'production'
+        script(type="text/javascript", src="/javascripts/analytics.js")
   body
     a(href='https://github.com/lstebner/portfolio')
         img(style='position: absolute; top: 0; right: 0; border: 0;',src='/images/forkme.png',alt='Fork me on GitHub')
