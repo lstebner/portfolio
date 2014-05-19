@@ -49,4 +49,5 @@ class Showcase
             @open_project_overlay window.location.hash.replace('#', '')
 
     open_project_overlay: (for_project) ->
+        World.event_tracker?.track_event 'user_action', 'click', 'view_project', for_project
         @project_overlay_view.open_project for_project

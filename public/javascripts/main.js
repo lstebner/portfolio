@@ -3,6 +3,9 @@
 //@codekit-prepend "css3-mediaqueries.js";
 
 World = {}
+if (typeof(_gaq) == "undefined"){
+    _gaq = [];
+}
 
 $(function(){
     //check all links for domain and if it's not relative, then make it target:_blank

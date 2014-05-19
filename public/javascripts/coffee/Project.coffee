@@ -44,6 +44,7 @@ class ProjectOverlayView
 
     cycle_images: (dir=1) ->
         return @current_image_idx = 0 unless @project
+        World.event_tracker?.track_event 'user_action', 'click', 'change_image', (if dir > 0 then 'next' else 'prev')
 
         next_idx = @current_image_idx + dir
         if next_idx > @project.images.length - 1
