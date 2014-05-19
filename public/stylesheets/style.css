@@ -297,6 +297,10 @@ body {
 }
 #showcase .showcase-column > ul > li .description ul {
   list-style-type: none;
+  padding: 0;
+}
+#showcase .showcase-column > ul > li .description h3 {
+  margin: 0;
 }
 #showcase .showcase-column > ul > li .description h3:not(:first-child) {
   margin-top: 16px;

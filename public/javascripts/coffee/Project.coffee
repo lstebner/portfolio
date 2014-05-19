@@ -34,7 +34,7 @@ class ProjectOverlayView
                 $el.parent().trigger('click')
                 return false
 
-            if _.indexOf ['next_image', 'prev_image', 'hide'], $el.data('action')
+            if _.indexOf(['next_image', 'prev_image', 'hide'], $el.data('action')) > -1
                 e.preventDefault()
 
             switch $el.data 'action'
