@@ -1,0 +1,26 @@
+<script type="text/template" id="project-overlay-template">
+    <div class="info-column">
+        <a href="<%=project.full_url%>"><%=project.display_url%></a>
+        <h1><%=project.title%></h1>
+        <p><%=project.description%></p>
+    </div>
+
+    <div class="images-column">
+        <div class="images-container">
+            <% _.each(project.images, function(image){ %>
+                <img src="<%=image%>" />
+            <% }); %>
+        </div>
+
+        <div class="paddle next">
+            <a href="#" class="handle">
+                <span>&gt;</span>
+            </a>
+        </div>
+        <div class="paddle prev">
+            <a href="#" class="handle">
+                <span>&lt;</span>
+            </a>
+        </div>
+    </div>
+</script>
