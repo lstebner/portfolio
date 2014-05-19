@@ -75,7 +75,7 @@ function do_404(res){
 
 app.get('/', function(req, res){
   res.render('index', {
-    title: 'Luke Stebner'
+    title: 'Luke Stebner | Bay Area Web Developer'
   });
 });
 
