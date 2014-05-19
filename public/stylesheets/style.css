@@ -157,6 +157,7 @@ body {
   float: left;
   background-color: #d9d97b;
   padding: 30px 45px;
+  margin: 0;
 }
 #header h1 a {
   color: inherit;
@@ -170,6 +171,7 @@ body {
   float: left;
   padding: 30px;
   font-weight: 100;
+  margin: 0;
 }
 #header h2 a {
   color: inherit;
@@ -247,6 +249,7 @@ body {
   float: right;
 }
 #showcase .showcase-column > ul {
+  margin: 0;
   list-style-type: none;
   position: relative;
   background-color: #3a3a3a;
