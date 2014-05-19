@@ -1,5 +1,6 @@
 class Showcase
     constructor: (container, opts={}) ->
+        @first_load = true
         @container = $ container
         @items = @container.find('li[data-project]')
 
@@ -34,7 +35,6 @@ class Showcase
             url: '/get_projects'
             dataType: 'json'
             success: (msg) =>
-                console.log 'got projects', msg
                 for project in msg
                     if _.has @projects, project.slug
                         @projects[project.slug] = project
@@ -43,6 +43,10 @@ class Showcase
 
     setup_project_overlay_view: ->
         @project_overlay_view = new ProjectOverlayView '#project-overlay', @projects
+
+        if @first_load && window.location.hash.length > 1
+            $first_load = false
+            @open_project_overlay window.location.hash.replace('#', '')
 
     open_project_overlay: (for_project) ->
         @project_overlay_view.open_project for_project

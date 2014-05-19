@@ -66,8 +66,11 @@ class ProjectOverlayView
         @current_image_idx
 
     open_project: (index=0) ->
+        return false unless _.has @projects, index
+
         @current_project = index
         @project = @projects[index]
+        window.location.hash = @project.slug
         @current_image_idx = 0
         @render()
         @setup_paddles()
@@ -96,6 +99,7 @@ class ProjectOverlayView
         return if !@open
 
         @open = false
+        window.location.hash = ""
         @container.fadeOut()
         @overlay.fadeOut()
 

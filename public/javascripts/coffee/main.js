@@ -100,8 +100,12 @@
       if (index == null) {
         index = 0;
       }
+      if (!_.has(this.projects, index)) {
+        return false;
+      }
       this.current_project = index;
       this.project = this.projects[index];
+      window.location.hash = this.project.slug;
       this.current_image_idx = 0;
       this.render();
       this.setup_paddles();
@@ -136,6 +140,7 @@
         return;
       }
       this.open = false;
+      window.location.hash = "";
       this.container.fadeOut();
       return this.overlay.fadeOut();
     };
@@ -167,6 +172,7 @@
       if (opts == null) {
         opts = {};
       }
+      this.first_load = true;
       this.container = $(container);
       this.items = this.container.find('li[data-project]');
       this.fetch_projects();
@@ -207,7 +213,6 @@
         dataType: 'json',
         success: function(msg) {
           var project, _j, _len1;
-          console.log('got projects', msg);
           for (_j = 0, _len1 = msg.length; _j < _len1; _j++) {
             project = msg[_j];
             if (_.has(_this.projects, project.slug)) {
@@ -220,7 +225,12 @@
     };
 
     Showcase.prototype.setup_project_overlay_view = function() {
-      return this.project_overlay_view = new ProjectOverlayView('#project-overlay', this.projects);
+      var $first_load;
+      this.project_overlay_view = new ProjectOverlayView('#project-overlay', this.projects);
+      if (this.first_load && window.location.hash.length > 1) {
+        $first_load = false;
+        return this.open_project_overlay(window.location.hash.replace('#', ''));
+      }
     };
 
     Showcase.prototype.open_project_overlay = function(for_project) {
