@@ -34,10 +34,11 @@ class ProjectOverlayView
                 $el.parent().trigger('click')
                 return false
 
-            if _.indexOf ['next_image', 'prev_image'], $el.data('action')
+            if _.indexOf ['next_image', 'prev_image', 'hide'], $el.data('action')
                 e.preventDefault()
 
             switch $el.data 'action'
+                when 'hide' then @hide()
                 when 'next_image' then @cycle_images 1
                 when 'prev_image' then @cycle_images -1
 
@@ -52,8 +53,10 @@ class ProjectOverlayView
 
         @current_image_idx = next_idx
 
-        @images_container.find('.viewing').removeClass('viewing')
-        $viewing = $(@images_container.find('img')[@current_image_idx]).addClass('viewing')
+        $viewed = @images_container.find('.viewing').removeClass('viewing')
+        if dir > 0
+            $viewed.addClass('viewed')
+        $viewing = $(@images_container.find('img')[@current_image_idx]).removeClass('viewed').addClass('viewing')
         if $viewing.height() < 1
             $viewing.load =>
                 @container.find('.images-column').height $viewing.height() + 2

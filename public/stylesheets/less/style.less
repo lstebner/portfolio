@@ -70,6 +70,17 @@ body{
     background-color: rgba(0, 0, 0, .8);
     z-index: 1010;
 
+    .close{
+        position: absolute;
+        right: 30px;
+        top: 20px;
+        color: #d8d8d8;
+        text-decoration: none;
+        font-size: 24px;
+        font-weight: 100;
+        font-family: sans-serif;
+    }
+
     .info-column{
         font-size: 18px;
 
@@ -109,12 +120,16 @@ body{
                 right: 0;
                 max-width: 100%;
                 margin: 0 auto;
-                .transition(left .65s);
+                .transition(left .65s ease);
                 z-index: 1;
 
                 &.viewing{
                     left: 0;
                     z-index: 2;
+                }
+
+                &.viewed{
+                    left: -100%;
                 }
             }
         }
@@ -290,7 +305,7 @@ body{
 
     .showcase-column{
         width: 72%;
-        min-width: 654px;
+        // min-width: 654px;
         float: right;
     }
 
@@ -575,5 +590,59 @@ body{
             width:100%;
             height:100%;
         }
+    }
+}
+
+@media (max-width: 1770px){
+    #showcase .showcase-column > ul > li{
+        height: 360px;
+    }
+}
+
+@media (max-width: 1399px){
+    #showcase .showcase-column > ul > li{
+        width: 94%;
+    }
+}
+
+@media (max-width: 1000px){
+    #header h2 span{
+        display: none;
+    }
+}
+
+@media (max-width: 990px){
+    #showcase{
+        .showcase-column{
+            width: 100%;
+
+            ul{
+                padding-right: 0;
+                padding-left: 8px;
+            }
+        }
+
+        .content-column{
+            width: 60%;
+        }
+    }
+}
+
+@media (max-width: 600px){
+    #header h2{
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 520px){
+    #header h2{
+        display: none;
+    }
+
+    #header h1{
+        width: 100%;
+        text-align: center;
+        padding-left: 0;
+        padding-right: 0;
     }
 }

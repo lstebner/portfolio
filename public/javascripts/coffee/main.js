@@ -51,10 +51,12 @@
           $el.parent().trigger('click');
           return false;
         }
-        if (_.indexOf(['next_image', 'prev_image'], $el.data('action'))) {
+        if (_.indexOf(['next_image', 'prev_image', 'hide'], $el.data('action'))) {
           e.preventDefault();
         }
         switch ($el.data('action')) {
+          case 'hide':
+            return _this.hide();
           case 'next_image':
             return _this.cycle_images(1);
           case 'prev_image':
@@ -64,7 +66,7 @@
     };
 
     ProjectOverlayView.prototype.cycle_images = function(dir) {
-      var $viewing, next_idx,
+      var $viewed, $viewing, next_idx,
         _this = this;
       if (dir == null) {
         dir = 1;
@@ -79,8 +81,11 @@
         next_idx += this.project.images.length;
       }
       this.current_image_idx = next_idx;
-      this.images_container.find('.viewing').removeClass('viewing');
-      $viewing = $(this.images_container.find('img')[this.current_image_idx]).addClass('viewing');
+      $viewed = this.images_container.find('.viewing').removeClass('viewing');
+      if (dir > 0) {
+        $viewed.addClass('viewed');
+      }
+      $viewing = $(this.images_container.find('img')[this.current_image_idx]).removeClass('viewed').addClass('viewing');
       if ($viewing.height() < 1) {
         $viewing.load(function() {
           return _this.container.find('.images-column').height($viewing.height() + 2);
