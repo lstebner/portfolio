@@ -92,4 +92,16 @@
             "/images/projects/insure4.jpg"
         ]
     }
+    ,
+    {
+        "title": "Beans and Hops",
+        "slug": "beansandhops",
+        "description": "Beans and Hops is a personal blog that I write to on and off. It is also a custom blogging platform I wrote which is unique because it runs off of flat markdown files intead of using a database. It's very lightweight and simple by design.",
+        "display_url": "http://beansandhops.com",
+        "full_url": "http://beansandhops.com",
+        "images": [
+            "/images/projects/beansandhops.jpg",
+            "/images/projects/beansandhops-post.jpg"
+        ]
+    }
 ]
