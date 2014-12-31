@@ -25,6 +25,19 @@
     }
     ,
     {
+        "title": "Luke and Tiffany Wedding Site",
+        "slug": "lukeandtiffany",
+        "description": "This website was made to give our wedding guests a place to get all the information about the event. It included some information about us, hotels, directions for travelers and also listed our registries. I both designed and developed this site.",
+        "display_url": "http://lukeandtiffany.com",
+        "full_url": "http://www.lukeandtiffany.com",
+        "images": [
+            "/images/projects/lukeandtiffany.jpg",
+            "/images/projects/lukeandtiffany-aboutus.jpg",
+            "/images/projects/lukeandtiffany-hotels.jpg"
+        ]
+    }
+    ,
+    {
         "title": "Are the Giants Playing Today?",
         "slug": "arethegiantsplayingtoday",
         "description": "Are the Giants playing today is a simple, one page site, that answers just that question. It is powered off of a Google spreadsheet which contains the schedule info and presents various different messages depending on if there is a game, if it's over and when the next scheduled game is. Useful for any SF Giants fan!",
@@ -68,14 +81,20 @@
     {
         "title": "Scribd",
         "slug": "scribd",
-        "description": "Scribd is an online library of over 400,000 books available across all devices. I work there full time as an engineer working on various parts of their websites. My responsibilites include building new features (which I can't share yet!) and also fixing bugs to maintain the overal site.",
+        "description": "Scribd is an online library of over 400,000 books available across all devices. I work there full time as an engineer working on various parts of their websites. My responsibilites include building new features such as the audiobook player for web and also fixing bugs to maintain the overall site. I work mainly in Coffeescript land along with Ruby on Rails, SCSS and ERB.",
         "display_url": "http://scribd.com",
         "full_url": "http://scribd.com",
         "images": [
-            "/images/projects/scribd.jpg",
-            "/images/projects/scribd2.jpg",
-            "/images/projects/scribd3.jpg",
-            "/images/projects/scribd-read.jpg"
+            "/images/projects/scribd-home.jpg",
+            "/images/projects/scribd-home2.jpg",
+            "/images/projects/scribd-login.jpg",
+            "/images/projects/scribd-loggedin-home.jpg",
+            "/images/projects/scribd-read.jpg",
+            "/images/projects/scribd-read-options.jpg",
+            "/images/projects/scribd-highlight.jpg",
+            "/images/projects/scribd-leave-note.jpg",
+            "/images/projects/scribd-audiobook.jpg",
+            "/images/projects/scribd-audiobook-toc.jpg"
         ]
     }
     ,
