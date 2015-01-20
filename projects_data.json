@@ -38,15 +38,16 @@
     }
     ,
     {
-        "title": "Are the Giants Playing Today?",
+        "title": "Is there a game today?",
         "slug": "arethegiantsplayingtoday",
-        "description": "Are the Giants playing today is a simple, one page site, that answers just that question. It is powered off of a Google spreadsheet which contains the schedule info and presents various different messages depending on if there is a game, if it's over and when the next scheduled game is. Useful for any SF Giants fan!",
+        "description": "This collection of sites started as a simple project to make 'Are the Giants playing today'. It was meant to tell me just that, are the Giants playing today? Last year I decided to spread the love and clone the site a few times, out of it came this little project which grows as I tinker with it.",
         "display_url": "http://arethegiantsplayingtoday.com",
         "full_url": "http://arethegiantsplayingtoday.com",
         "images": [
-            "/images/projects/arethegiantsplayingtoday.jpg",
-            "/images/projects/arethegiantsplayingtoday-yes-now.jpg",
-            "/images/projects/arethegiantsplayingtoday-yes-already-over.jpg"
+            "/images/projects/itagt-sfgiants-yes-now.jpg",
+            "/images/projects/itagt-sfgiants-spring-training.jpg",
+            "/images/projects/itagt-yankees-yes-later.jpg",
+            "/images/projects/itagt-pirates-yes-over.jpg"
         ]
     }
     ,
