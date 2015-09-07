@@ -177,6 +177,9 @@ body {
   text-decoration: none;
   float: right;
 }
+#showcase .showcase-column > ul > li .project_link:hover {
+  color: #0a61ca;
+}
 #showcase .showcase-column > ul > li .project_title {
   margin: 0;
 }
