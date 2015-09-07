@@ -1,0 +1,34 @@
+#social{
+    link-style-type:none;
+    float: right;
+    padding:0;
+    margin:0;
+
+    li{
+        @size:32px;
+
+        padding:0;
+        margin:5px;
+        background-image:url(/images/social-icons.png);
+        background-repeat:0;
+        display:inline-block;
+        width:@size;
+        height:@size;
+        opacity:.5;
+        .transition(opacity 0.3s linear);
+
+        &.linkedin{ background-position:0 0; }
+        &.twitter{ background-position:-@size 0; }
+        &.email{ background-position:-@size*2 0; }
+
+        &:hover{
+            opacity:.9;
+        }
+
+        a{
+            display:block;
+            width:100%;
+            height:100%;
+        }
+    }
+}
