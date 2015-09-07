@@ -18,26 +18,7 @@ block content
                 h3 Located in the San Francisco Bay Area
                 p I work with a number of technologies including JavaScript (Coffeescript), HTML, CSS (LESS, SCSS), NodeJS, Ruby on Rails, PHP, MongoDB and MySQL. Although during the day I do this at Scribd, I'm also available to be hired to help with your project, or to build a custom website for you!
 
-                .contact
-                    ul#social
-                        li.linkedin
-                            a(href="http://www.linkedin.com/profile/view?id=47073148")
-                        li.twitter
-                            a(href="https://twitter.com/ahhsumx")
-                        li.email
-                            a(href="mailto:luke.stebner+contact@gmail.com")
-
-                    h2 Contact Me
-
-                    p Want to get in touch about work you'd like done? Or maybe just to say hi? Well, this form is the easiest way to do that so be sure to fill out your email so I can respond!
-
-                    form#contact-form(name="contact_form", method="POST", action="/contact")
-                        .alert(style="display:none;")
-                            p
-                        input(type="text", placeholder="Your Name", name="name")
-                        input(type="text", placeholder="Email Address", name="email")
-                        textarea(placeholder="Message", name="message", rows=8)
-                        input(type="submit", value="Send", name="send").submit_btn
+                include partials/contact
 
     .overlay#master-overlay
     .overlay-content#project-overlay
