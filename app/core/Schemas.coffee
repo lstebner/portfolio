@@ -10,5 +10,6 @@ App.Schemas.Project = new Schema {
   full_url: type: String, defalut: ""
   technologies: type: Schema.Types.Mixed, default: []
   images: type: Schema.Types.Mixed, default: []
+  archived: type: Boolean, default: false
 }
 

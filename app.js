@@ -279,6 +279,10 @@ App.Schemas.Project = new Schema({
   images: {
     type: Schema.Types.Mixed,
     "default": []
+  },
+  archived: {
+    type: Boolean,
+    "default": false
   }
 });
 
@@ -844,6 +848,7 @@ App.HomeController = (function(superClass) {
       }).exec((function(_this) {
         return function(err, docs) {
           _this.projects_data = docs;
+          console.log(_this.projects_data);
           return _this.loaded("projects_data");
         };
       })(this));
