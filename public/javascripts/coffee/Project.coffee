@@ -1,4 +1,4 @@
-class Project
+class World.Project
     constructor: (data={}) ->
         @set_data data
 
@@ -12,7 +12,7 @@ class Project
         , data
 
 
-class ProjectOverlayView
+class World.ProjectOverlayView
     constructor: (container, @projects=[]) ->
         @container = $ container
         @overlay = $('#master-overlay').hide()

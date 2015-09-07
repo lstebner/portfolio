@@ -42,7 +42,7 @@ class Showcase
                 @setup_project_overlay_view()
 
     setup_project_overlay_view: ->
-        @project_overlay_view = new ProjectOverlayView '#project-overlay', @projects
+        @project_overlay_view = new World.ProjectOverlayView '#project-overlay', @projects
 
         if @first_load && window.location.hash.length > 1
             $first_load = false
