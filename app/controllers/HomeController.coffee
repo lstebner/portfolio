@@ -14,10 +14,8 @@ class App.HomeController extends Portfolio.Controller
     return unless super
 
     if load_what.indexOf("projects_data") > -1
-      fs.readFile './projects_data.json', 'UTF-8', (err, contents) =>
-        return console.log "error reading projects_data: #{err}" if err
-        @projects_data = JSON.parse contents
-        @projects_data.sort (a, b) => if a.order > b.order then 1 else -1
+      App.Models.Project.find({}).sort({ order: 1 }).exec (err, docs) =>
+        @projects_data = docs
         @loaded "projects_data"
 
   index: ->

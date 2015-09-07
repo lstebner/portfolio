@@ -57,6 +57,8 @@ class App
       console.log "error! parsing json in #{@env} conf"
     console.log "#{@env} config loaded"
 
+  before_ready: -> 1
+
   setup: ->
     for key, val of Requires
       @[key] = val
@@ -69,6 +71,8 @@ class App
 
     @listener = @app.listen @config.port
     console.log "Express server listening on port %d in %s mode", @listener?.address().port, @app.settings.env
+
+    @before_ready()
 
     @ready()
 
