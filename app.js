@@ -819,7 +819,6 @@ Portfolio.App = (function(superClass) {
   App.prototype.setup_routes = function() {
     this.route("/", "home#index");
     this.route("/contact-submit", "contact#submit", "post");
-    this.route("/get_projects", "home#get_projects");
     return this.route("/sitemap", "sitemap#index");
   };
 
@@ -947,11 +946,10 @@ App.HomeController = (function(superClass) {
   HomeController.prototype.index = function() {
     this.view_data.title = "Luke Stebner | Bay Area Web Developer";
     this.view_data.projects = this.projects_data;
+    this.view_data.js_opts = {
+      projects_data: this.projects_data
+    };
     return this.render("index");
-  };
-
-  HomeController.prototype.get_projects = function() {
-    return this.json(this.projects_data);
   };
 
   return HomeController;

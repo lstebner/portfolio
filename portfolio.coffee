@@ -25,7 +25,6 @@ class Portfolio.App extends App
   setup_routes: ->
     @route "/", "home#index"
     @route "/contact-submit", "contact#submit", "post"
-    @route "/get_projects", "home#get_projects"
     @route "/sitemap", "sitemap#index"
 
   always_configure: ->

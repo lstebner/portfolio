@@ -1,10 +1,11 @@
 class Showcase
     constructor: (container, opts={}) ->
+        {@projects_data} = opts
         @first_load = true
         @container = $ container
         @items = @container.find('li[data-project]')
 
-        @fetch_projects()
+        @setup_projects()
 
         @setup_events()
 
@@ -23,23 +24,18 @@ class Showcase
                 $el.closest('[data-project]').click()
                 return false
 
-    fetch_projects: ->
+    setup_projects: ->
         @projects = {}
 
         for li in @items
             $li = $ li
             @projects[$li.data('project')] = {}
 
-        $.ajax
-            type: 'GET'
-            url: '/get_projects'
-            dataType: 'json'
-            success: (msg) =>
-                for project in msg
-                    if _.has @projects, project.slug
-                        @projects[project.slug] = project
+        for project in @projects_data 
+            if _.has @projects, project.slug
+                @projects[project.slug] = project
 
-                @setup_project_overlay_view()
+        @setup_project_overlay_view()
 
     setup_project_overlay_view: ->
         @project_overlay_view = new World.ProjectOverlayView '#project-overlay', @projects
