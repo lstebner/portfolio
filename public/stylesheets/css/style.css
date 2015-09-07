@@ -156,38 +156,56 @@ body {
 #showcase .showcase-column > ul > li.archive {
   display: none;
 }
-#showcase .showcase-column > ul > li .description {
-  position: absolute;
+#showcase .showcase-column > ul > li .topbar,
+#showcase .showcase-column > ul > li .bottombar {
+  opacity: 0;
+  transition: opacity 0.4s;
+  -moz-transition: opacity 0.4s;
+  -webkit-transition: opacity 0.4s;
   left: 0;
-  top: 0;
-  bottom: 0;
-  width: 40%;
-  min-width: 180px;
+  right: 0;
   padding: 20px;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: #fafafa;
+  background-color: rgba(250, 250, 250, 0.8);
+  color: #404040;
 }
-#showcase .showcase-column > ul > li .description a {
+#showcase .showcase-column > ul > li .topbar {
+  position: absolute;
+  top: 0;
+  box-shadow: 0px -4px 10px rgba(155, 155, 155, 0.9);
+}
+#showcase .showcase-column > ul > li .project_link {
   color: inherit;
   text-decoration: none;
+  float: right;
 }
-#showcase .showcase-column > ul > li .description ul {
-  list-style-type: none;
-  padding: 0;
-}
-#showcase .showcase-column > ul > li .description h3 {
+#showcase .showcase-column > ul > li .project_title {
   margin: 0;
 }
-#showcase .showcase-column > ul > li .description h3:not(:first-child) {
-  margin-top: 16px;
+#showcase .showcase-column > ul > li .bottombar {
+  position: absolute;
+  bottom: 0;
+  box-shadow: 0px 4px 10px rgba(155, 155, 155, 0.9);
+}
+#showcase .showcase-column > ul > li .technologies .pill {
+  display: inline-block;
+  border: 1px solid #404040;
+  border-radius: 6px;
+  padding: 4px 8px;
+  color: #404040;
+  margin-right: 12px;
 }
 #showcase .showcase-column > ul > li:hover {
   border-radius: 3px;
-  box-shadow: 0 0 8px -1px #d8d8d8;
 }
-#showcase .showcase-column > ul > li:hover .description {
-  display: block;
-  border-radius: 3px 0 0 3px;
+#showcase .showcase-column > ul > li:hover .topbar,
+#showcase .showcase-column > ul > li:hover .bottombar {
+  opacity: 1;
+}
+#showcase .showcase-column > ul > li:hover .topbar {
+  border-radius: 3px 3px 0 0;
+}
+#showcase .showcase-column > ul > li:hover .bottombar {
+  border-radius: 0 0 3px 3px;
 }
 #showcase .showcase-column > ul:hover > li {
   opacity: .65;
@@ -200,9 +218,6 @@ body {
   height: auto;
   width: 100%;
   max-height: 420px;
-}
-#showcase .description {
-  display: none;
 }
 .overlay {
   position: fixed;
