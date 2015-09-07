@@ -225,21 +225,17 @@ block content
                         li.email
                             a(href="mailto:luke.stebner+contact@gmail.com")
 
-                    //- h3 Hire me for...
-                    //- ul
-                    //-     li
-
                     h2 Contact Me
 
                     p Want to get in touch about work you'd like done? Or maybe just to say hi? Well, this form is the easiest way to do that so be sure to fill out your email so I can respond!
 
-                    form#contact-form(name="contact_form")
+                    form#contact-form(name="contact_form", method="POST", action="/contact")
                         .alert(style="display:none;")
                             p
                         input(type="text", placeholder="Your Name", name="name")
                         input(type="text", placeholder="Email Address", name="email")
                         textarea(placeholder="Message", name="message", rows=8)
-                        input(type="submit", value="Send", name="send")
+                        input(type="submit", value="Send", name="send").submit_btn
 
     .overlay#master-overlay
     .overlay-content#project-overlay
