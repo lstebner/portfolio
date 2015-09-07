@@ -10,73 +10,9 @@ block content
     #showcase
         .showcase-column
             ul#showcase-projects
-                li(data-project="scribd", style="background-image:url(/images/projects/scribd-cover.jpg);")
+                for project in projects
+                    include partials/project
 
-                    .description
-                        h3 Scribd
-                        a(href="http://www.scribd.com/") http://scribd.com
-
-                        h3 Technology
-                        ul.technology
-                            li Coffeescript
-                            li Ruby on Rails
-                            li Erector Templates
-                            li SCSS
-                            li MySQL
-
-                li(data-project="omletapi", style="background-image:url(/images/projects/omletapi-cover.jpg);")
-
-                    .description
-                        h3 Omlet API Docs
-                        a(href="http://www-new.omlet.me/docs/") http://omlet.me/docs
-
-                        h3 Technology
-                        ul.technology
-                            li Coffeescript
-                            li Jade Templates
-                            li LESS
-                            li Shell Script
-
-                li(data-project="imgverse", style="background-image:url(/images/projects/imgverse-cover.jpg);").main
-
-                    .description
-                        h3 IMGVERSE
-                        a(href="http://www.imgverse.com") http://imgverse.com
-
-                        h3 Technology
-                        ul.technology
-                            li Nodejs
-                            li MongoDB
-                            li jQuery
-
-                li.archive(data-project="brightguage", style="background-image:url(/images/projects/brightgauge.jpg);")
-
-                    .description
-                        h3 BrightGauge App
-                        a(href="http://www.brightgauge.com") http://www.brightgauge.com
-                        //- p I worked on BrightGauge's internal app as the Senior Front End Engineer and built almost all of the frontend aspects including a fully customizable dashboards solution.
-
-                        h3 Technology
-                        ul.technology
-                            li jQuery
-                            li Vanilla JS
-                            li CSS
-                            li HTML
-                            li Highcharts
-                            li Gridster
-                            li Backbone
-                            li PHP
-
-                li(data-project="arethegiantsplayingtoday", style="background-image:url(/images/projects/arethegiantsplayingtoday-cover.jpg);").main
-
-                    .description
-                        h3 Are the Giants playing today?
-                        a(href="http://arethegiantsplayingtoday.com") http://arethegiantsplayingtoday.com
-
-                        h3 Technology
-                        ul.technology
-                            li JavaScript
-                            li HTML/CSS
 
                 li(data-project="mbb", style="background-image:url(/images/projects/mbb-cover.jpg);").main
 
@@ -94,19 +30,6 @@ block content
                             li Jade
                             li jQuery
 
-                li(data-project="10g", style="background-image:url(/images/projects/10g-cover.jpg);").main
-
-                    .description
-                        h3 10 Dollar Gaming
-                        a(href="http://10dollargaming.com") http://10dollargaming.com
-
-                        h3 Technology
-                        ul.technology
-                            li Node
-                            li Underscore
-                            li Express
-                            li Jade
-                            li jQuery
 
                 li(data-project="lukeandtiffany", style="background-image:url(/images/projects/lukeandtiffany-cover.jpg);").main
 

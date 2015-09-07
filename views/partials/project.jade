@@ -1,0 +1,9 @@
+li(data-project=project.slug, style="background-image:url(/images/projects/#{project.slug}-cover.jpg);")
+    .description
+        h3= project.title 
+        a(href=project.full_url)= project.display_url
+
+        h3 Technology
+        ul.technology
+            for tech in project.technologies
+                li= tech

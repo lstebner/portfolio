@@ -946,6 +946,7 @@ App.HomeController = (function(superClass) {
 
   HomeController.prototype.index = function() {
     this.view_data.title = "Luke Stebner | Bay Area Web Developer";
+    this.view_data.projects = this.projects_data;
     return this.render("index");
   };
 

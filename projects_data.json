@@ -1,10 +1,12 @@
 [
     {
         "title": "Omlet API",
+        "order": 2,
         "slug": "omletapi",
         "description": "Omlet's API Documentation was starting to look a bit outdated so I helped out to give it a facelift. The new docs were designed by Jon Victorino and I built them a package which included the working site and a way to easily update content so they could continue to use it going forward without needing me to make updates for them. The result was these beautiful, easy to use docs!",
         "display_url": "http://omlet.me/docs",
         "full_url": "http://www-new.omlet.me/docs/",
+        "technologies": ["Coffeescript", "Jade templates", "LESS", "Shell script"],
         "images": [
             "/images/projects/omletapi.jpg"
         ]
@@ -12,10 +14,12 @@
     ,
     {
         "title": "IMGVERSE",
+        "order": 3,
         "slug": "imgverse",
         "description": "IMGVERSE is a useful and beautiful site for sharing and discovering images. It allows for both public and private uploads if you have something you want to share, or you can just use the timeline to browse.",
         "display_url": "http://imgverse.com",
         "full_url": "http://www.imgverse.com",
+        "technologies": ["nodejs", "mongodb", "jQuery", "Coffeescript", "LESS/CSS"],
         "images": [
             "/images/projects/imgverse.jpg",
             "/images/projects/imgverse-detail.jpg",
@@ -26,10 +30,12 @@
     ,
     {
         "title": "Luke and Tiffany Wedding Site",
+        "order": 7,
         "slug": "lukeandtiffany",
         "description": "This website was made to give our wedding guests a place to get all the information about the event. It included some information about us, hotels, directions for travelers and also listed our registries. I both designed and developed this site.",
         "display_url": "http://lukeandtiffany.com",
         "full_url": "http://www.lukeandtiffany.com",
+        "technologies": ["nodejs", "underscore", "jade", "jQuery", "design!"],
         "images": [
             "/images/projects/lukeandtiffany.jpg",
             "/images/projects/lukeandtiffany-aboutus.jpg",
@@ -39,10 +45,12 @@
     ,
     {
         "title": "Is there a game today?",
+        "order": 4,
         "slug": "arethegiantsplayingtoday",
         "description": "This collection of sites started as a simple project to make 'Are the Giants playing today'. It was meant to tell me just that, are the Giants playing today? Last year I decided to spread the love and clone the site a few times, out of it came this little project which grows as I tinker with it.",
         "display_url": "http://arethegiantsplayingtoday.com",
         "full_url": "http://arethegiantsplayingtoday.com",
+        "technologies": ["JavaScript", "HTML/CSS", "nodejs"],
         "images": [
             "/images/projects/itagt-sfgiants-yes-now.jpg",
             "/images/projects/itagt-sfgiants-spring-training.jpg",
@@ -53,10 +61,12 @@
     ,
     {
         "title": "My Brick Builds",
+        "order": 5,
         "slug": "mbb",
         "description": "My Brick Builds is a social site created to let people share Lego builds. It was created by a friend and me out of interest of seeing what types of Lego things people are building. I was responsible for all backend development and much of the front end.",
         "display_url": "http://mybrickbuilds.com",
         "full_url": "http://mybrickbuilds.com",
+        "technologies": ["nodejs", "mongodb", "backbone", "underscore", "jade", "jQuery"],
         "images": [
             "/images/projects/mbb.jpg",
             "/images/projects/mbb2.jpg",
@@ -66,10 +76,12 @@
     ,
     {
         "title": "10 Dollar Gaming",
+        "order": 6,
         "slug": "10g",
         "description": "10 Dollar Gaming is a blog site that was created because I love playing all these games that many other people seem to overlook. I wanted to be able to tell people about them so this started off as a Wordpress blog, but is now on a custom platform I made that reads from flat files instead of a database. On top of development I also play these games and write all content for the site.",
         "display_url": "http://10dollargaming.com",
         "full_url": "http://10dollargaming.com",
+        "technologies": ["nodejs", "underscore", "jade", "jQuery"],
         "images": [
             "/images/projects/10g.jpg",
             "/images/projects/10g-review1.jpg",
@@ -81,10 +93,12 @@
     ,
     {
         "title": "Scribd",
+        "order": 1,
         "slug": "scribd",
         "description": "Scribd is an online library of over 400,000 books available across all devices. I work there full time as an engineer working on various parts of their websites. My responsibilites include building new features such as the audiobook player for web and also fixing bugs to maintain the overall site. I work mainly in Coffeescript land along with Ruby on Rails, SCSS and ERB.",
         "display_url": "http://scribd.com",
         "full_url": "http://scribd.com",
+        "technologies": ["Coffeescript", "Ruby on Rails", "SCSS"],
         "images": [
             "/images/projects/scribd-home.jpg",
             "/images/projects/scribd-home2.jpg",
@@ -101,10 +115,12 @@
     ,
     {
         "title": "Insure.com",
+        "order": 9,
         "slug": "insure",
         "description": "I worked on Insure.com during 2009-2010 when it was purchased by Quinstreet. I was the main dev in charge for turning it from a set of static files into a CMS powered dynamic site. This included building all of the backend and frontend along with several of the form starts and insurance calculator features.",
         "display_url": "http://insure.com",
         "full_url": "http://insure.com",
+        "technologies": ["PHP", "MySQL", "HTML/CSS", "CodeIgniter"],
         "images": [
             "/images/projects/insure.jpg",
             "/images/projects/insure2.jpg",
@@ -115,10 +131,12 @@
     ,
     {
         "title": "Beans and Hops",
+        "order": 8,
         "slug": "beansandhops",
         "description": "Beans and Hops is a personal blog that I write to on and off. It is also a custom blogging platform I wrote which is unique because it runs off of flat markdown files intead of using a database. It's very lightweight and simple by design.",
         "display_url": "http://beansandhops.com",
         "full_url": "http://beansandhops.com",
+        "technologies": ["nodejs", "jade", "LESS", "jQuery"],
         "images": [
             "/images/projects/beansandhops.jpg",
             "/images/projects/beansandhops-post.jpg"

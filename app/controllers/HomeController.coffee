@@ -19,6 +19,7 @@ class App.HomeController extends Portfolio.Controller
 
   index: ->
     @view_data.title = "Luke Stebner | Bay Area Web Developer"
+    @view_data.projects = @projects_data
     @render "index"
 
   get_projects: ->
