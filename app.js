@@ -930,6 +930,9 @@ App.HomeController = (function(superClass) {
   };
 
   HomeController.prototype.load = function(load_what) {
+    if (!HomeController.__super__.load.apply(this, arguments)) {
+      return;
+    }
     if (load_what.indexOf("projects_data") > -1) {
       return fs.readFile('./projects_data.json', 'UTF-8', (function(_this) {
         return function(err, contents) {
@@ -937,6 +940,13 @@ App.HomeController = (function(superClass) {
             return console.log("error reading projects_data: " + err);
           }
           _this.projects_data = JSON.parse(contents);
+          _this.projects_data.sort(function(a, b) {
+            if (a.order > b.order) {
+              return 1;
+            } else {
+              return -1;
+            }
+          });
           return _this.loaded("projects_data");
         };
       })(this));
