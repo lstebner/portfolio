@@ -2,48 +2,33 @@ extends layout
 
 block content
     #header
-        .container
-            .row
-                .twelvecol
-                    h1
-                        a(href="/") Luke Stebner,
-                    h2 Frontend Developer
-            .row
-                .onecol|&nbsp;
-                .tencol
-                    ul.showcase-skills
-                        li.js
-                            img(src="/images/orangcicle-js.png")
-                        li.php
-                            img(src="/images/orangcicle-php.png")
-                        li.html
-                            img(src="/images/orangcicle-html.png")
-                        li.less
-                            img(src="/images/orangcicle-less.png")
+        h1
+            a(href="/") Luke Stebner
+        h2 Full Stack Web Developer
+            span - Check out some of my work below
 
-    #header-bottom-cap
-        ul
-            li
-            li.two
-            li.three
-            li
+    #showcase
+        .showcase-column
+            ul#showcase-projects
+                li(data-project="scribd", style="background-image:url(/images/projects/scribd-cover.jpg);")
 
-    #work
-        .container
-            .row
-                .twelvecol
-                    h2 My Work
+                    .description
+                        h3 Scribd
+                        a(href="http://www.scribd.com/") http://scribd.com
 
-            .row.first
-                .eightcol
-                    .example
-                        img(src="/images/projects/omletapi.jpg")
+                        h3 Technology
+                        ul.technology
+                            li Coffeescript
+                            li Ruby on Rails
+                            li Erector Templates
+                            li SCSS
+                            li MySQL
 
-                .fourcol.last
+                li(data-project="omletapi", style="background-image:url(/images/projects/omletapi-cover.jpg);")
+
                     .description
                         h3 Omlet API Docs
                         a(href="http://www-new.omlet.me/docs/") http://omlet.me/docs
-                        p Omlet's API Documentation was starting to look a bit outdated so I helped out to give it a facelift. The new docs were designed by Jon Victorino and I built them a package which included the working site and a way to easily update content so they could continue to use it going forward without needing me to make updates for them. The result was these beautiful, easy to use docs!
 
                         h3 Technology
                         ul.technology
@@ -52,16 +37,11 @@ block content
                             li LESS
                             li Shell Script
 
-            .row
-                .eightcol
-                    .example
-                        img(src="/images/projects/imgverse.jpg")
+                li(data-project="imgverse", style="background-image:url(/images/projects/imgverse-cover.jpg);").main
 
-                .fourcol.last
                     .description
                         h3 IMGVERSE
                         a(href="http://www.imgverse.com") http://imgverse.com
-                        p IMGVERSE is a useful and beautiful site for sharing and discovering images. It allows for both public and private uploads if you have something you want to share, or you can just use the timeline to browse.
 
                         h3 Technology
                         ul.technology
@@ -69,16 +49,12 @@ block content
                             li MongoDB
                             li jQuery
 
-            .row
-                .eightcol
-                    .example
-                        img(src="/images/projects/brightgauge.jpg")
+                li.archive(data-project="brightguage", style="background-image:url(/images/projects/brightgauge.jpg);")
 
-                .fourcol.last
                     .description
                         h3 BrightGauge App
                         a(href="http://www.brightgauge.com") http://www.brightgauge.com
-                        p I worked on BrightGauge's internal app as the Senior Front End Engineer and built almost all of the frontend aspects including a fully customizable dashboards solution.
+                        //- p I worked on BrightGauge's internal app as the Senior Front End Engineer and built almost all of the frontend aspects including a fully customizable dashboards solution.
 
                         h3 Technology
                         ul.technology
@@ -91,32 +67,22 @@ block content
                             li Backbone
                             li PHP
 
-            .row
-                .eightcol
-                    .example
-                        img(src="/images/projects/arethegiantsplayingtoday.jpg")
+                li(data-project="arethegiantsplayingtoday", style="background-image:url(/images/projects/arethegiantsplayingtoday-cover.jpg);").main
 
-                .fourcol.last
                     .description
                         h3 Are the Giants playing today?
                         a(href="http://arethegiantsplayingtoday.com") http://arethegiantsplayingtoday.com
-                        p Are the Giants playing today is a simple, one page site, that answers just that question. It is powered off of a Google spreadsheet which contains the schedule info and presents various different messages depending on if there is a game, if it's over and when the next scheduled game is. Useful for any SF Giants fan!
 
                         h3 Technology
                         ul.technology
                             li JavaScript
                             li HTML/CSS
 
-            .row
-                .eightcol
-                    .example
-                        img(src="/images/projects/mbb.jpg")
+                li(data-project="mbb", style="background-image:url(/images/projects/mbb-cover.jpg);").main
 
-                .fourcol.last
                     .description
                         h3 My Brick Builds
                         a(href="http://mybrickbuilds.com") http://mybrickbuilds.com
-                        p My Brick Builds is a social site created to let people share Lego builds. It was created by a friend and me out of interest of seeing what types of Lego things people are building. I was responsible for all backend development and much of the front end.
 
                         h3 Technology
                         ul.technology
@@ -128,17 +94,11 @@ block content
                             li Jade
                             li jQuery
 
-            .row
-                .eightcol
-                    .example
-                        img(src="/images/projects/10g.jpg")
+                li(data-project="10g", style="background-image:url(/images/projects/10g-cover.jpg);").main
 
-                .fourcol.last
                     .description
                         h3 10 Dollar Gaming
                         a(href="http://10dollargaming.com") http://10dollargaming.com
-                        p 10 Dollar Gaming is a blog site that was created because I love playing all these games that many other people seem to overlook. I wanted to be able to tell people about them so this started off as a Wordpress blog, but is now on a custom platform I made that reads from flat files instead of a database. On top of development I also play these games and write all content for the site.
-
 
                         h3 Technology
                         ul.technology
@@ -148,16 +108,27 @@ block content
                             li Jade
                             li jQuery
 
-            .row
-                .eightcol
-                    .example
-                        img(src="/images/projects/selectvids.jpg")
+                li(data-project="lukeandtiffany", style="background-image:url(/images/projects/lukeandtiffany-cover.jpg);").main
 
-                .fourcol.last
+                    .description
+                        h3 Luke and Tiffany Wedding Website
+                        a(href="http://lukeandtiffany.com") http://lukeandtiffany.com
+
+                        h3 Technology
+                        ul.technology
+                            li Node
+                            li Underscore
+                            li Express
+                            li Jade
+                            li jQuery
+                            li Design
+
+                li.archive(data-project="selectvids", style="background-image:url(/images/projects/selectvids.jpg);").main
+
                     .description
                         h3 SelectVids
                         a(href="http://selectvids.com") http://selectvids.com
-                        p SelectVids was an idea of a friend of mine, but I saw it as a good opportunity to further my skills with Backbone so I did all development and now we use it as a place to save our favorite videos for other people to also discover.
+                        //- p SelectVids was an idea of a friend of mine, but I saw it as a good opportunity to further my skills with Backbone so I did all development and now we use it as a place to save our favorite videos for other people to also discover.
 
                         h3 Technology
                         ul.technology
@@ -169,16 +140,13 @@ block content
                             li Jade
                             li jQuery
 
-            .row
-                .eightcol
-                    .example
-                        img(src="/images/projects/kanye.jpg")
+                li.archive
+                    //- img(src="/images/projects/kanye.jpg").main
 
-                .fourcol.last
                     .description
                         h3 KanyeIpsum
                         a(href="http://kanyeipsum.me") http://kanyeipsum.me
-                        p KanyeIpsum is a Lorem Ipsum generator based entirely off of Kanye West lyrics. It's offensive and amusing; just like if the rapper himself were in your website while you develop.
+                        //- p KanyeIpsum is a Lorem Ipsum generator based entirely off of Kanye West lyrics. It's offensive and amusing; just like if the rapper himself were in your website while you develop.
 
                         h3 Technology
                         ul.technology
@@ -187,16 +155,13 @@ block content
                             li Jade
                             li jQuery
 
-            .row
-                .eightcol
-                    .example
-                        img(src="/images/projects/trackagoal.jpg")
+                li.archive
+                    //- img(src="/images/projects/trackagoal.jpg").main
 
-                .fourcol.last
                     .description
                         h3 Track a Goal
                         a(href="http://trackagoal.com") http://trackagoal.com
-                        p Track a Goal was created in order to help people complete goals they have by giving them an easy place to store goals and view their progress. I was responsible for the backend development and database architecture as well as frontend interactions.
+                        //- p Track a Goal was created in order to help people complete goals they have by giving them an easy place to store goals and view their progress. I was responsible for the backend development and database architecture as well as frontend interactions.
 
                         h3 Technology
                         ul.technology
@@ -204,16 +169,13 @@ block content
                             li MySql
                             li jQuery
 
-            .row
-                .eightcol
-                    .example
-                        img(src="/images/projects/bello.jpg")
+                li.archive
+                    //- img(src="/images/projects/bello.jpg").main
 
-                .fourcol.last
                     .description
                         h3 Bello
                         a(href="http://bello.com") http://bello.com
-                        p Bello is an image uploader for people who want to quickly share an image. It generates a unique URL for you to share your uploaded image. It was one of my first node based projects and I was responsible for the backend development and frontend interactions.
+                        //- p Bello is an image uploader for people who want to quickly share an image. It generates a unique URL for you to share your uploaded image. It was one of my first node based projects and I was responsible for the backend development and frontend interactions.
 
                         h3 Technology
                         ul.technology
@@ -222,20 +184,39 @@ block content
                             li jQuery
                             li AWS S3
 
-    #footer
-        .container
-            .row
-                .fourcol
-                    h2 Contact Me
+                li(data-project="beansandhops", style="background-image:url(/images/projects/beansandhops-cover.jpg);")
 
-                    form#contact-form(name="contact_form")
-                        .alert(style="display:none;")
-                            p
-                        input(type="text", placeholder="Your Name", name="name")
-                        input(type="text", placeholder="Email Address", name="email")
-                        textarea(placeholder="Message", name="message")
-                        input(type="submit", value="Send", name="send")
+                    .description
+                        h3 Beans and Hops
+                        a(href="http://www.beansandhops.com/") http://beansandhops.com
 
+                        h3 Technology
+                        ul.technology
+                            li NodeJS
+                            li Jade Templates
+                            li LESS
+                            li Express
+                            li Markdown
+
+                li(data-project="insure", style="background-image:url(/images/projects/insure-cover.jpg);")
+
+                    .description
+                        h3 Insure.com
+                        a(href="http://www.insure.com/") http://insure.com
+
+                        h3 Technology
+                        ul.technology
+                            li PHP
+                            li MySQL
+                            li HTML/CSS
+                            li Code Igniter
+
+        .content-column
+            .content
+                h3 Located in the San Francisco Bay Area
+                p I work with a number of technologies including JavaScript (Coffeescript), HTML, CSS (LESS, SCSS), NodeJS, Ruby on Rails, PHP, MongoDB and MySQL. Although during the day I do this at Scribd, I'm also available to be hired to help with your project, or to build a custom website for you!
+
+                .contact
                     ul#social
                         li.linkedin
                             a(href="http://www.linkedin.com/profile/view?id=47073148")
@@ -244,74 +225,21 @@ block content
                         li.email
                             a(href="mailto:luke.stebner+contact@gmail.com")
 
-                .threecol
-                    //- h2 Articles I've Written
-                    //- ul.linklist
-                    //-     li
-                    //-         a(href="http://beansandhops.com/post/auto-growing-textarea") Auto Growing Textarea
-                    //-     li
-                    //-         a(href="http://beansandhops.com/post/nodejs-setting-up-your-first-express-project") Nodejs: Setting Up Your First Express Project
-                    //-     li
-                    //-         a(href="http://beansandhops.com/post/a-nodejs-introductory-primer") A Nodejs Introductory Primer
-                    //-     li
-                    //-         a(href="http://beansandhops.com/post/underscore-mixin-for-getting-an-object-property") Underscore Mixin for Getting an Object Property
-                    //-     li
-                    //-         a(href="http://beansandhops.com/post/underscore-mixin-for-multiple-string-replacements") Underscore Mixin for Multiple String Replacements
+                    h2 Contact Me
 
-                    h2 Links
-                    ul.linklist
-                        li
-                            a(href="http://jonvictorino.com") Jon Victorino
-                        li
-                            a(href="http://joshminnich.com") Josh Minnich
-                        li
-                            a(href="http://www.walkerhamilton.com/") Walker Hamilton
-                        li
-                            a(href="http://jeremyckahn.com") Jeremy Kahn
+                    p Want to get in touch about work you'd like done? Or maybe just to say hi? Well, this form is the easiest way to do that so be sure to fill out your email so I can respond!
 
-                .fivecol.last
-                    h2 Skills
-                    ul.starlist
-                        li.label
-                            strong Javascript
-                        li.on
-                        li.on
-                        li.on
-                        li.on
-                        li.on
+                    form#contact-form(name="contact_form", method="POST", action="/contact")
+                        .alert(style="display:none;")
+                            p
+                        input(type="text", placeholder="Your Name", name="name")
+                        input(type="text", placeholder="Email Address", name="email")
+                        textarea(placeholder="Message", name="message", rows=8)
+                        input(type="submit", value="Send", name="send").submit_btn
 
-                    ul.starlist
-                        li.label
-                            strong HTML & CSS
-                        li.on
-                        li.on
-                        li.on
-                        li.on
-                        li.on
+    .overlay#master-overlay
+    .overlay-content#project-overlay
 
-                    ul.starlist
-                        li.label
-                            strong NodeJS
-                        li.on
-                        li.on
-                        li.on
-                        li.on
-                        li.on
 
-                    ul.starlist
-                        li.label
-                            strong PHP
-                        li.on
-                        li.on
-                        li.on
-                        li.off
-                        li.off
 
-                    ul.starlist
-                        li.label
-                            strong MySQL/MongoDB
-                        li.on
-                        li.on
-                        li.on
-                        li.off
-                        li.off
+    include project-overlay-template.html

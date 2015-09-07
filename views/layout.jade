@@ -1,18 +1,28 @@
-doctype 5
+doctype html
 html
   head
     title= title
-    link(href='http://fonts.googleapis.com/css?family=Dosis', rel='stylesheet', type='text/css')
-    link(rel='stylesheet', href='/stylesheets/1140/1140.css')
-    link(rel='stylesheet', href='/stylesheets/1140/styles.css')
+    meta(name="title", value=title)
+    meta(name="keywords", value="web developer, javascript, html, css, freelancer, contractor, php, san francisco, bay area")
+    meta(name="description", value="I am a Web Developer located in the Bay Area available for hire to build your custom website, or help with an existing project. Check out my work!")
+    link(href='http://fonts.googleapis.com/css?family=Dosis:200,300,400', rel='stylesheet', type='text/css')
     link(rel='stylesheet', href='/stylesheets/style.css')
 
-    script(type="text/javascript", src="/javascripts/min/main.min.js")
+    script(type="text/javascript", src="/javascripts/min/main-min.js")
+    script(type="text/javascript", src="/javascripts/coffee/main.js")
 
     if process.env.NODE_ENV == 'production'
         script(type="text/javascript", src="/javascripts/analytics.js")
   body
-    a(href='https://github.com/lstebner/portfolio')
-        img(style='position: absolute; top: 0; right: 0; border: 0;',src='/images/forkme.png',alt='Fork me on GitHub')
+    //- a(href='https://github.com/lstebner/portfolio')
+    //-     img(style='position: absolute; top: 0; right: 0; border: 0;',src='/images/forkme.png',alt='Fork me on GitHub')
 
-    block content
+    div(id=auto_generated_id)
+        block content
+
+
+    if compiled_js
+        script(type="text/javascript", id="compiled_js_block").
+            $(function(){
+                !{compiled_js}
+            });

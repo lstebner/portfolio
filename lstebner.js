@@ -24,9 +24,7 @@ var cache = require('./cache.js')
 
 //read in hte "secrets" stuff
 fs.exists('./secrets.json', function(exists){
-  //if it exists...
   if (exists){
-    //...read it
     fs.readFile('./secrets.json', 'UTF-8', function(err, data){
       if (!err){
         //parse content
@@ -42,6 +40,14 @@ fs.exists('./secrets.json', function(exists){
         });
       }
     });
+  }
+});
+
+var projects_data = [];
+
+fs.readFile('./projects_data.json', 'UTF-8', function(err, contents){
+  if (!err){
+    projects_data = JSON.parse(contents);
   }
 });
 
@@ -69,7 +75,7 @@ function do_404(res){
 
 app.get('/', function(req, res){
   res.render('index', {
-    title: 'Luke Stebner'
+    title: 'Luke Stebner | Bay Area Web Developer'
   });
 });
 
@@ -100,6 +106,10 @@ app.post('/contact-submit', function(req, res){
       done(false, false);
     }
   });
+});
+
+app.get('/get_projects', function(req, res){
+  res.json(projects_data);
 });
 
 http.createServer(app).listen(app.get('port'), function(){
