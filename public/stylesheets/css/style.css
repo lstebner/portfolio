@@ -171,7 +171,6 @@ body {
 #showcase .showcase-column > ul > li .topbar {
   position: absolute;
   top: 0;
-  box-shadow: 0px -4px 10px rgba(155, 155, 155, 0.9);
 }
 #showcase .showcase-column > ul > li .project_link {
   color: inherit;
@@ -184,7 +183,6 @@ body {
 #showcase .showcase-column > ul > li .bottombar {
   position: absolute;
   bottom: 0;
-  box-shadow: 0px 4px 10px rgba(155, 155, 155, 0.9);
 }
 #showcase .showcase-column > ul > li .technologies .pill {
   display: inline-block;
