@@ -843,12 +843,13 @@ App.HomeController = (function(superClass) {
       return;
     }
     if (load_what.indexOf("projects_data") > -1) {
-      return App.Models.Project.find({}).sort({
+      return App.Models.Project.find({
+        archived: false
+      }).sort({
         order: 1
       }).exec((function(_this) {
         return function(err, docs) {
           _this.projects_data = docs;
-          console.log(_this.projects_data);
           return _this.loaded("projects_data");
         };
       })(this));

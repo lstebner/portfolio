@@ -14,7 +14,7 @@ class App.HomeController extends Portfolio.Controller
     return unless super
 
     if load_what.indexOf("projects_data") > -1
-      App.Models.Project.find({}).sort({ order: 1 }).exec (err, docs) =>
+      App.Models.Project.find({ archived: false }).sort({ order: 1 }).exec (err, docs) =>
         @projects_data = docs
         @loaded "projects_data"
 
