@@ -1,3 +1,14 @@
 [
-
+    {
+        "title": "JRule",
+        "order": 1,
+        "slug": "jrule",
+        "description": "JRule is a bookmarklet powered set of tools focused around measuring things on web pages.",
+        "display_url": "https://github.com/lstebner/jrule",
+        "full_url": "https://github.com/lstebner/jrule",
+        "technologies": ["javascript"],
+        "images": [
+            "/images/projects/jrule.jpg"
+        ]
+    }
 ]
