@@ -248,7 +248,24 @@
     ProjectOverlayView.prototype.setup_events = function() {
       this.overlay.on('click', (function(_this) {
         return function(e) {
+          if (!_this.open) {
+            return;
+          }
           return _this.hide();
+        };
+      })(this));
+      $(document.body).on("keydown", (function(_this) {
+        return function(e) {
+          if (!_this.open) {
+            return;
+          }
+          if (e.keyCode === 27) {
+            return _this.hide();
+          } else if (e.keyCode === 37) {
+            return _this.cycle_images(-1);
+          } else if (e.keyCode === 39) {
+            return _this.cycle_images(1);
+          }
         };
       })(this));
       return this.container.on('click', (function(_this) {
