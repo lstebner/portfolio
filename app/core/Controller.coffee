@@ -20,7 +20,7 @@ class App.Controller
 
   requires: (needs_list, for_what="all") ->
     needs_list = [needs_list] unless _.isArray(needs_list)
-    
+
     _register = (method_name, needs_list) =>
       @requirements_list[method_name] = if @requirements_list[method_name]?
         _.union @requirements_list[method_name], needs_list
@@ -56,7 +56,8 @@ class App.Controller
           @render()
         true
       else
-        false
+        console.log "method not found or not public", "#{@name}::#{@requested_method}"
+        @do_404()
     else
       setTimeout =>
         @do @requested_method, @prevent_render
