@@ -283,6 +283,10 @@ App.Schemas.Project = new Schema({
   archived: {
     type: Boolean,
     "default": false
+  },
+  group: {
+    type: String,
+    "default": "default"
   }
 });
 
@@ -386,6 +390,9 @@ App.Controller = (function() {
     var _register, j, k, len, len1, m, methods, ref, results, results1;
     if (for_what == null) {
       for_what = "all";
+    }
+    if (!_.isArray(needs_list)) {
+      needs_list = [needs_list];
     }
     _register = (function(_this) {
       return function(method_name, needs_list) {
@@ -728,32 +735,46 @@ Portfolio.App = (function(superClass) {
   App.prototype.init_projects = function() {
     console.log("updating projects data");
     App.Models.Project.find({}).remove(function(err) {});
-    return fs.readFile('./projects_data.json', 'UTF-8', (function(_this) {
-      return function(err, contents) {
-        var errors, i, j, k, len, len1, p, project, projects_data, results;
-        if (err) {
-          return console.log("error reading projects_data: " + err);
-        }
-        projects_data = JSON.parse(contents);
-        errors = [];
-        for (j = 0, len = projects_data.length; j < len; j++) {
-          project = projects_data[j];
-          p = new App.Models.Project(project);
-          p.save(function(err) {
-            if (err) {
-              return errors.push(err);
-            }
-          });
-        }
-        console.log("done updating projects, " + errors.length + " errors");
-        if (errors.length) {
-          results = [];
-          for (i = k = 0, len1 = errors.length; k < len1; i = ++k) {
-            err = errors[i];
-            results.push(console.log("projects err " + i + ": " + err));
+    return fs.readdir(__dirname + "/projects_data", (function(_this) {
+      return function(err, files) {
+        var filename, group_name, j, len, results;
+        results = [];
+        for (j = 0, len = files.length; j < len; j++) {
+          filename = files[j];
+          if (filename.indexOf(".json") > -1) {
+            group_name = filename.substr(0, filename.indexOf("."));
+            results.push(fs.readFile(__dirname + "/projects_data/" + filename, 'UTF-8', function(err, contents) {
+              var errors, i, k, l, len1, len2, p, project, projects_data, results1;
+              if (err) {
+                return console.log("error reading projects_data: " + err);
+              }
+              projects_data = JSON.parse(contents);
+              errors = [];
+              for (k = 0, len1 = projects_data.length; k < len1; k++) {
+                project = projects_data[k];
+                p = new App.Models.Project(project);
+                p.group = group_name;
+                p.save(function(err) {
+                  if (err) {
+                    return errors.push(err);
+                  }
+                });
+              }
+              console.log("done updating projects, " + projects_data.length + " projects, " + errors.length + " errors");
+              if (errors.length) {
+                results1 = [];
+                for (i = l = 0, len2 = errors.length; l < len2; i = ++l) {
+                  err = errors[i];
+                  results1.push(console.log("projects err " + i + ": " + err));
+                }
+                return results1;
+              }
+            }));
+          } else {
+            results.push(void 0);
           }
-          return results;
         }
+        return results;
       };
     })(this));
   };
@@ -833,8 +854,9 @@ App.HomeController = (function(superClass) {
 
   HomeController.prototype.setup = function() {
     this.projects_data = [];
-    this.public_methods = ["index", "get_projects"];
-    this.requires(["projects_data"]);
+    this.public_methods = ["index"];
+    this.requires("sites_projects", "index");
+    this.requires("labs_projects", "labs");
     return HomeController.__super__.setup.apply(this, arguments);
   };
 
@@ -842,15 +864,29 @@ App.HomeController = (function(superClass) {
     if (!HomeController.__super__.load.apply(this, arguments)) {
       return;
     }
-    if (load_what.indexOf("projects_data") > -1) {
-      return App.Models.Project.find({
-        archived: false
+    if (load_what.indexOf("sites_projects") > -1) {
+      App.Models.Project.find({
+        archived: false,
+        group: "sites"
       }).sort({
         order: 1
       }).exec((function(_this) {
         return function(err, docs) {
-          _this.projects_data = docs;
-          return _this.loaded("projects_data");
+          _this.sites_projects = docs;
+          return _this.loaded("sites_projects");
+        };
+      })(this));
+    }
+    if (load_what.indexOf("labs_projects") > -1) {
+      return App.Models.Project.find({
+        archived: false,
+        group: "labs"
+      }).sort({
+        order: 1
+      }).exec((function(_this) {
+        return function(err, docs) {
+          _this.labs_projects = docs;
+          return _this.loaded("labs_projects");
         };
       })(this));
     }
@@ -858,9 +894,18 @@ App.HomeController = (function(superClass) {
 
   HomeController.prototype.index = function() {
     this.view_data.title = "Luke Stebner | Bay Area Web Developer";
-    this.view_data.projects = this.projects_data;
+    this.view_data.projects = this.sites_projects;
     this.view_data.js_opts = {
-      projects_data: this.projects_data
+      projects_data: this.sites_projects
+    };
+    return this.render("index");
+  };
+
+  HomeController.prototype.labs = function() {
+    this.view_data.title = "Labs - Luke Stebner | Bay Area Web Developer";
+    this.view_data.projects = this.labs_projects;
+    this.view_data.js_opts = {
+      projects_data: this.labs_projects
     };
     return this.render("index");
   };

@@ -55,18 +55,23 @@ class Portfolio.App extends App
     console.log "updating projects data"
     App.Models.Project.find({}).remove (err) ->
 
-    fs.readFile './projects_data.json', 'UTF-8', (err, contents) =>
-      return console.log "error reading projects_data: #{err}" if err
-      projects_data = JSON.parse contents
-      errors = []
-      for project in projects_data
-        p = new App.Models.Project project
-        p.save (err) => errors.push(err) if err
+    fs.readdir "#{__dirname}/projects_data", (err, files) =>
+      for filename in files
+        if filename.indexOf(".json") > -1
+          group_name = filename.substr 0, filename.indexOf(".")
+          fs.readFile "#{__dirname}/projects_data/#{filename}", 'UTF-8', (err, contents) =>
+            return console.log "error reading projects_data: #{err}" if err
+            projects_data = JSON.parse contents
+            errors = []
+            for project in projects_data
+              p = new App.Models.Project project
+              p.group = group_name
+              p.save (err) => errors.push(err) if err
 
-      console.log "done updating projects, #{errors.length} errors"
-      if errors.length
-        for err, i in errors
-          console.log "projects err #{i}: #{err}"
+            console.log "done updating projects, #{projects_data.length} projects, #{errors.length} errors"
+            if errors.length
+              for err, i in errors
+                console.log "projects err #{i}: #{err}"
 
 
 
