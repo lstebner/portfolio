@@ -440,7 +440,8 @@ App.Controller = (function() {
         }
         true;
       } else {
-        false;
+        console.log("method not found or not public", this.name + "::" + this.requested_method);
+        this.do_404();
       }
     } else {
       setTimeout((function(_this) {
@@ -697,6 +698,7 @@ Portfolio.App = (function(superClass) {
 
   App.prototype.setup_routes = function() {
     this.route("/", "home#index");
+    this.route("/labs", "home#labs");
     this.route("/contact-submit", "contact#submit", "post");
     return this.route("/sitemap", "sitemap#index");
   };
@@ -737,39 +739,44 @@ Portfolio.App = (function(superClass) {
     App.Models.Project.find({}).remove(function(err) {});
     return fs.readdir(__dirname + "/projects_data", (function(_this) {
       return function(err, files) {
-        var filename, group_name, j, len, results;
+        var filename, group_name, j, len, num_groups, read_projects, results;
+        num_groups = 0;
+        read_projects = function(group_name) {
+          num_groups += 1;
+          return fs.readFile(__dirname + "/projects_data/" + filename, 'UTF-8', function(err, contents) {
+            var errors, i, j, k, len, len1, p, project, projects_data, results;
+            if (err) {
+              return console.log("error reading projects_data: " + err);
+            }
+            projects_data = JSON.parse(contents);
+            errors = [];
+            for (j = 0, len = projects_data.length; j < len; j++) {
+              project = projects_data[j];
+              project.group = group_name;
+              p = new App.Models.Project(project);
+              p.save(function(err) {
+                if (err) {
+                  return errors.push(err);
+                }
+              });
+            }
+            console.log("done updating projects for group '" + group_name + "': " + projects_data.length + " projects, " + errors.length + " errors");
+            if (errors.length) {
+              results = [];
+              for (i = k = 0, len1 = errors.length; k < len1; i = ++k) {
+                err = errors[i];
+                results.push(console.log("projects err " + i + ": " + err));
+              }
+              return results;
+            }
+          });
+        };
         results = [];
         for (j = 0, len = files.length; j < len; j++) {
           filename = files[j];
           if (filename.indexOf(".json") > -1) {
             group_name = filename.substr(0, filename.indexOf("."));
-            results.push(fs.readFile(__dirname + "/projects_data/" + filename, 'UTF-8', function(err, contents) {
-              var errors, i, k, l, len1, len2, p, project, projects_data, results1;
-              if (err) {
-                return console.log("error reading projects_data: " + err);
-              }
-              projects_data = JSON.parse(contents);
-              errors = [];
-              for (k = 0, len1 = projects_data.length; k < len1; k++) {
-                project = projects_data[k];
-                p = new App.Models.Project(project);
-                p.group = group_name;
-                p.save(function(err) {
-                  if (err) {
-                    return errors.push(err);
-                  }
-                });
-              }
-              console.log("done updating projects, " + projects_data.length + " projects, " + errors.length + " errors");
-              if (errors.length) {
-                results1 = [];
-                for (i = l = 0, len2 = errors.length; l < len2; i = ++l) {
-                  err = errors[i];
-                  results1.push(console.log("projects err " + i + ": " + err));
-                }
-                return results1;
-              }
-            }));
+            results.push(read_projects(group_name));
           } else {
             results.push(void 0);
           }
@@ -854,7 +861,7 @@ App.HomeController = (function(superClass) {
 
   HomeController.prototype.setup = function() {
     this.projects_data = [];
-    this.public_methods = ["index"];
+    this.public_methods = ["index", "labs"];
     this.requires("sites_projects", "index");
     this.requires("labs_projects", "labs");
     return HomeController.__super__.setup.apply(this, arguments);
@@ -902,6 +909,7 @@ App.HomeController = (function(superClass) {
   };
 
   HomeController.prototype.labs = function() {
+    console.log("dolab");
     this.view_data.title = "Labs - Luke Stebner | Bay Area Web Developer";
     this.view_data.projects = this.labs_projects;
     this.view_data.js_opts = {

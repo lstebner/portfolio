@@ -6,7 +6,7 @@ class App.HomeController extends Portfolio.Controller
 
   setup: ->
     @projects_data = []
-    @public_methods = ["index"]
+    @public_methods = ["index", "labs"]
     @requires "sites_projects", "index"
     @requires "labs_projects", "labs"
     super
