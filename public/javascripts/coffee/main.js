@@ -248,7 +248,24 @@
     ProjectOverlayView.prototype.setup_events = function() {
       this.overlay.on('click', (function(_this) {
         return function(e) {
+          if (!_this.open) {
+            return;
+          }
           return _this.hide();
+        };
+      })(this));
+      $(document.body).on("keydown", (function(_this) {
+        return function(e) {
+          if (!_this.open) {
+            return;
+          }
+          if (e.keyCode === 27) {
+            return _this.hide();
+          } else if (e.keyCode === 37) {
+            return _this.cycle_images(-1);
+          } else if (e.keyCode === 39) {
+            return _this.cycle_images(1);
+          }
         };
       })(this));
       return this.container.on('click', (function(_this) {
@@ -345,7 +362,8 @@
       }
       this.open = true;
       this.overlay.fadeIn();
-      return this.container.fadeIn();
+      this.container.fadeIn();
+      return $(document.body).addClass("no_scroll");
     };
 
     ProjectOverlayView.prototype.hide = function() {
@@ -355,7 +373,8 @@
       this.open = false;
       window.location.hash = "";
       this.container.fadeOut();
-      return this.overlay.fadeOut();
+      this.overlay.fadeOut();
+      return $(document.body).removeClass("no_scroll");
     };
 
     ProjectOverlayView.prototype.render = function() {
@@ -379,10 +398,11 @@
       if (opts == null) {
         opts = {};
       }
+      this.projects_data = opts.projects_data;
       this.first_load = true;
       this.container = $(container);
       this.items = this.container.find('li[data-project]');
-      this.fetch_projects();
+      this.setup_projects();
       this.setup_events();
     }
 
@@ -405,8 +425,8 @@
       })(this));
     };
 
-    Showcase.prototype.fetch_projects = function() {
-      var $li, i, len, li, ref;
+    Showcase.prototype.setup_projects = function() {
+      var $li, i, j, len, len1, li, project, ref, ref1;
       this.projects = {};
       ref = this.items;
       for (i = 0, len = ref.length; i < len; i++) {
@@ -414,23 +434,14 @@
         $li = $(li);
         this.projects[$li.data('project')] = {};
       }
-      return $.ajax({
-        type: 'GET',
-        url: '/get_projects',
-        dataType: 'json',
-        success: (function(_this) {
-          return function(msg) {
-            var j, len1, project;
-            for (j = 0, len1 = msg.length; j < len1; j++) {
-              project = msg[j];
-              if (_.has(_this.projects, project.slug)) {
-                _this.projects[project.slug] = project;
-              }
-            }
-            return _this.setup_project_overlay_view();
-          };
-        })(this)
-      });
+      ref1 = this.projects_data;
+      for (j = 0, len1 = ref1.length; j < len1; j++) {
+        project = ref1[j];
+        if (_.has(this.projects, project.slug)) {
+          this.projects[project.slug] = project;
+        }
+      }
+      return this.setup_project_overlay_view();
     };
 
     Showcase.prototype.setup_project_overlay_view = function() {
@@ -464,7 +475,7 @@
     Home.prototype.before_setup = function() {
       var $a, a, i, len, ref, results;
       this.overlay = $(".overlay").hide();
-      this.showcase = new Showcase(this.container.find("#showcase"));
+      this.showcase = new Showcase(this.container.find("#showcase"), this.opts);
       this.contact_form = this.container.find("#contact-form");
       this.contact_submit = this.contact_form.find("input[type=submit]");
       ref = this.container.find("a");

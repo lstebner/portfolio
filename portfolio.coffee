@@ -3,7 +3,7 @@
 # @codekit-append "app/controllers/__index"
 
 class Portfolio.App extends App
-  {express, mongoose} = Requires
+  {express, mongoose, fs} = Requires
 
   @init: (opts={}) ->
     @site = new Portfolio.App _.extend {
@@ -25,7 +25,6 @@ class Portfolio.App extends App
   setup_routes: ->
     @route "/", "home#index"
     @route "/contact-submit", "contact#submit", "post"
-    @route "/get_projects", "home#get_projects"
     @route "/sitemap", "sitemap#index"
 
   always_configure: ->
@@ -48,6 +47,27 @@ class Portfolio.App extends App
     @app.locals.pretty = true
 
   configure_for_production: ->
+
+  before_ready: ->
+    @init_projects()
+
+  init_projects: ->
+    console.log "updating projects data"
+    App.Models.Project.find({}).remove (err) ->
+
+    fs.readFile './projects_data.json', 'UTF-8', (err, contents) =>
+      return console.log "error reading projects_data: #{err}" if err
+      projects_data = JSON.parse contents
+      errors = []
+      for project in projects_data
+        p = new App.Models.Project project
+        p.save (err) => errors.push(err) if err
+
+      console.log "done updating projects, #{errors.length} errors"
+      if errors.length
+        for err, i in errors
+          console.log "projects err #{i}: #{err}"
+
 
 
 

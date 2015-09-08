@@ -113,6 +113,10 @@ App = (function() {
     return console.log(this.env + " config loaded");
   };
 
+  App.prototype.before_ready = function() {
+    return 1;
+  };
+
   App.prototype.setup = function() {
     var key, ref, val;
     for (key in Requires) {
@@ -125,6 +129,7 @@ App = (function() {
     this.setup_routes();
     this.listener = this.app.listen(this.config.port);
     console.log("Express server listening on port %d in %s mode", (ref = this.listener) != null ? ref.address().port : void 0, this.app.settings.env);
+    this.before_ready();
     return this.ready();
   };
 
@@ -241,181 +246,48 @@ App.Schemas = {};
 
 Schema = Requires.Schema;
 
-App.Schemas.User = new Schema({
-  date_registered: {
-    type: Date,
-    "default": null
-  },
-  ip: {
-    type: String,
-    "default": null
-  },
-  registration_key: {
-    type: String,
-    "default": null
-  }
-});
-
-App.Schemas.Like = new Schema({
-  date: {
-    type: Date,
-    "default": new Date()
-  },
-  username: {
-    type: String,
-    required: true
-  }
-});
-
-App.Schemas.Tag = new Schema({
-  name: {
-    type: String,
-    required: true,
-    "default": ''
-  },
-  slug: {
-    type: String,
-    required: true,
-    "default": ''
-  }
-});
-
-App.Schemas.Comment = new Schema({
-  date: {
-    type: Date,
-    "default": new Date()
-  },
-  edited: {
-    type: Boolean,
-    "default": false
-  },
-  last_edited_date: {
-    type: Date,
-    "default": null
-  },
-  deleted: {
-    type: Boolean,
-    "default": false
-  },
-  deleted_date: {
-    type: Date,
-    "default": null
-  },
-  user: {
-    type: Schema.Types.Mixed,
-    "default": {}
-  },
-  content: {
-    type: String,
-    "default": ''
-  }
-});
-
-App.Schemas.Upload = new Schema({
-  date_uploaded: {
-    type: Date,
-    "default": new Date()
-  },
+App.Schemas.Project = new Schema({
   title: {
     type: String,
-    "default": ''
+    required: true
   },
-  slug: {
-    type: String,
-    "default": ''
-  },
-  desc: {
-    type: String,
-    "default": ''
-  },
-  file_ext: {
-    type: String,
-    "default": ''
-  },
-  likes: [App.Schemas.Like],
-  num_likes: {
+  order: {
     type: Number,
     "default": 0
   },
-  permalink: {
-    type: String,
-    "default": '',
-    unique: true
-  },
-  tags: [App.Schemas.Tag],
-  source_url: {
-    type: String,
-    "default": ''
-  },
-  comments: [App.Schemas.Comment],
-  num_comments: 0,
-  is_private: false,
-  upload_error: {
-    type: Schema.Types.Mixed,
-    "default": null
-  },
-  has_error: {
-    type: Boolean,
-    "default": false
-  },
-  uploaded_by: {
-    type: String,
-    "default": ''
-  }
-});
-
-App.Schemas.Admin = new Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  password: {
-    type: String,
-    required: true
-  },
-  logged_in: {
-    type: Boolean,
-    "default": false
-  },
-  session_id: {
-    type: String,
-    "default": ''
-  },
-  session_expires: {
-    type: Date,
-    "default": null
-  }
-});
-
-App.Schemas.DataCache = new Schema({
-  created: {
-    type: Date,
-    required: true
-  },
-  expires: {
-    type: Date,
-    required: true
-  },
   slug: {
     type: String,
-    required: true
+    require: true,
+    unique: true
   },
-  parameters: {
+  description: {
     type: String,
     "default": ""
   },
-  data: {
+  display_url: {
+    type: String,
+    "default": ""
+  },
+  full_url: {
+    type: String,
+    defalut: ""
+  },
+  technologies: {
     type: Schema.Types.Mixed,
     "default": []
+  },
+  images: {
+    type: Schema.Types.Mixed,
+    "default": []
+  },
+  archived: {
+    type: Boolean,
+    "default": false
   }
 });
 
 App.Models = {
-  Upload: Requires.mongoose.model("Upload", App.Schemas.Upload),
-  Tag: Requires.mongoose.model("Tag", App.Schemas.Tag),
-  Admin: Requires.mongoose.model("Admin", App.Schemas.Admin),
-  DataCache: Requires.mongoose.model("DataCache", App.Schemas.DataCache)
+  Project: Requires.mongoose.model("Project", App.Schemas.Project)
 };
 
 App.Router = (function() {
@@ -784,7 +656,7 @@ App.View = (function() {
 })();
 
 Portfolio.App = (function(superClass) {
-  var express, mongoose;
+  var express, fs, mongoose;
 
   extend(App, superClass);
 
@@ -792,7 +664,7 @@ Portfolio.App = (function(superClass) {
     return App.__super__.constructor.apply(this, arguments);
   }
 
-  express = Requires.express, mongoose = Requires.mongoose;
+  express = Requires.express, mongoose = Requires.mongoose, fs = Requires.fs;
 
   App.init = function(opts) {
     if (opts == null) {
@@ -819,7 +691,6 @@ Portfolio.App = (function(superClass) {
   App.prototype.setup_routes = function() {
     this.route("/", "home#index");
     this.route("/contact-submit", "contact#submit", "post");
-    this.route("/get_projects", "home#get_projects");
     return this.route("/sitemap", "sitemap#index");
   };
 
@@ -849,6 +720,43 @@ Portfolio.App = (function(superClass) {
   };
 
   App.prototype.configure_for_production = function() {};
+
+  App.prototype.before_ready = function() {
+    return this.init_projects();
+  };
+
+  App.prototype.init_projects = function() {
+    console.log("updating projects data");
+    App.Models.Project.find({}).remove(function(err) {});
+    return fs.readFile('./projects_data.json', 'UTF-8', (function(_this) {
+      return function(err, contents) {
+        var errors, i, j, k, len, len1, p, project, projects_data, results;
+        if (err) {
+          return console.log("error reading projects_data: " + err);
+        }
+        projects_data = JSON.parse(contents);
+        errors = [];
+        for (j = 0, len = projects_data.length; j < len; j++) {
+          project = projects_data[j];
+          p = new App.Models.Project(project);
+          p.save(function(err) {
+            if (err) {
+              return errors.push(err);
+            }
+          });
+        }
+        console.log("done updating projects, " + errors.length + " errors");
+        if (errors.length) {
+          results = [];
+          for (i = k = 0, len1 = errors.length; k < len1; i = ++k) {
+            err = errors[i];
+            results.push(console.log("projects err " + i + ": " + err));
+          }
+          return results;
+        }
+      };
+    })(this));
+  };
 
   return App;
 
@@ -931,13 +839,17 @@ App.HomeController = (function(superClass) {
   };
 
   HomeController.prototype.load = function(load_what) {
+    if (!HomeController.__super__.load.apply(this, arguments)) {
+      return;
+    }
     if (load_what.indexOf("projects_data") > -1) {
-      return fs.readFile('./projects_data.json', 'UTF-8', (function(_this) {
-        return function(err, contents) {
-          if (err) {
-            return console.log("error reading projects_data: " + err);
-          }
-          _this.projects_data = JSON.parse(contents);
+      return App.Models.Project.find({
+        archived: false
+      }).sort({
+        order: 1
+      }).exec((function(_this) {
+        return function(err, docs) {
+          _this.projects_data = docs;
           return _this.loaded("projects_data");
         };
       })(this));
@@ -946,11 +858,11 @@ App.HomeController = (function(superClass) {
 
   HomeController.prototype.index = function() {
     this.view_data.title = "Luke Stebner | Bay Area Web Developer";
+    this.view_data.projects = this.projects_data;
+    this.view_data.js_opts = {
+      projects_data: this.projects_data
+    };
     return this.render("index");
-  };
-
-  HomeController.prototype.get_projects = function() {
-    return this.json(this.projects_data);
   };
 
   return HomeController;

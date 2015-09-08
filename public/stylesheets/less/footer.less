@@ -1,0 +1,109 @@
+#footer{
+    background-color:#d8d8d8;
+    padding:40px;
+    margin-top:80px;
+
+    h2{
+        color:#a14646;
+        font-weight:800;
+        font-size:36px;
+        margin-bottom:30px;
+    }
+
+    form{
+        .alert{
+            border:1px solid #888;
+            background-color:#ccc;
+
+            p{
+                margin:6px 8px;
+                color:#333;
+            }
+
+            &.alert-error{
+                border-color:#f00;
+                background-color:#f77;
+
+                p{ color:#f00; }
+            }
+
+            &.alert-success{
+                border-color:#46a173;
+                background-color:#a7d9c0;
+
+                p{ color:#46a173; }
+            }
+        }
+
+        input[type="text"]
+        ,textarea{
+            .border-radius(8px);
+            display:block;
+            width:88%;
+            padding:20px;
+            border:1px solid #ddd;
+            margin:20px 0;
+            font-size:16px;
+            font-weight:500;
+        }
+
+        textarea{
+            height:200px;
+        }
+
+        input[type="submit"]{
+            background-color:#467ca1;
+            width:160px;
+            padding:16px;
+            text-align:center;
+            float:right;
+            font-size:24px;
+            color:#fff;
+            font-weight:bold;
+            .border-radius(8px);
+        }
+    }
+
+    ul.linklist{
+        list-style-type:none;
+
+        li{
+            margin:8px 0;
+
+            a{
+                font-size:16px;
+                text-decoration:none;
+                font-weight:600;
+                color:#467ca1;
+            }
+        }
+    }
+
+    ul.starlist{
+        list-style-type:none;
+        clear:both;
+
+        li{
+            margin:8px 4px;
+            background-image:url(/images/stars.png);
+            background-repeat:none;
+            background-position:-25px 0;
+            width:24px;
+            height:24px;
+            display:block;
+            float:left;
+
+            &.on{
+                background-position:0 0;
+            }
+
+            &.label{
+                width:160px;
+                background-image:none;
+                font-size:20px;
+                color:#444;
+            }
+        }
+    }
+}
+

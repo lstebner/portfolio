@@ -1,7 +1,7 @@
 class World.Home extends World.Widget
   before_setup: ->
     @overlay = $(".overlay").hide()
-    @showcase = new Showcase @container.find "#showcase"
+    @showcase = new Showcase @container.find("#showcase"), @opts
     @contact_form = @container.find "#contact-form"
     @contact_submit = @contact_form.find("input[type=submit]")
 

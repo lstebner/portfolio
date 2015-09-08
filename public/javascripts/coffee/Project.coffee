@@ -25,7 +25,17 @@ class World.ProjectOverlayView
 
     setup_events: ->
         @overlay.on 'click', (e) =>
+            return unless @open
             @hide()
+
+        $(document.body).on "keydown", (e) =>
+            return unless @open
+            if e.keyCode == 27
+                @hide()
+            else if e.keyCode == 37
+                @cycle_images -1
+            else if e.keyCode == 39
+                @cycle_images 1
 
         @container.on 'click', (e) =>
             $el = $(e.target)
@@ -95,6 +105,7 @@ class World.ProjectOverlayView
         @open = true
         @overlay.fadeIn()
         @container.fadeIn()
+        $(document.body).addClass "no_scroll"
 
     hide: ->
         return if !@open
@@ -103,6 +114,7 @@ class World.ProjectOverlayView
         window.location.hash = ""
         @container.fadeOut()
         @overlay.fadeOut()
+        $(document.body).removeClass "no_scroll"
 
     render: ->
         return unless @template

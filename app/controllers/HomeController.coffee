@@ -11,15 +11,15 @@ class App.HomeController extends Portfolio.Controller
     super
 
   load: (load_what) ->
+    return unless super
+
     if load_what.indexOf("projects_data") > -1
-      fs.readFile './projects_data.json', 'UTF-8', (err, contents) =>
-        return console.log "error reading projects_data: #{err}" if err
-        @projects_data = JSON.parse contents
+      App.Models.Project.find({ archived: false }).sort({ order: 1 }).exec (err, docs) =>
+        @projects_data = docs
         @loaded "projects_data"
 
   index: ->
     @view_data.title = "Luke Stebner | Bay Area Web Developer"
+    @view_data.projects = @projects_data
+    @view_data.js_opts = projects_data: @projects_data
     @render "index"
-
-  get_projects: ->
-    @json @projects_data
