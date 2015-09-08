@@ -345,7 +345,8 @@
       }
       this.open = true;
       this.overlay.fadeIn();
-      return this.container.fadeIn();
+      this.container.fadeIn();
+      return $(document.body).addClass("no_scroll");
     };
 
     ProjectOverlayView.prototype.hide = function() {
@@ -355,7 +356,8 @@
       this.open = false;
       window.location.hash = "";
       this.container.fadeOut();
-      return this.overlay.fadeOut();
+      this.overlay.fadeOut();
+      return $(document.body).removeClass("no_scroll");
     };
 
     ProjectOverlayView.prototype.render = function() {

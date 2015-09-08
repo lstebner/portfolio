@@ -95,6 +95,7 @@ class World.ProjectOverlayView
         @open = true
         @overlay.fadeIn()
         @container.fadeIn()
+        $(document.body).addClass "no_scroll"
 
     hide: ->
         return if !@open
@@ -103,6 +104,7 @@ class World.ProjectOverlayView
         window.location.hash = ""
         @container.fadeOut()
         @overlay.fadeOut()
+        $(document.body).removeClass "no_scroll"
 
     render: ->
         return unless @template

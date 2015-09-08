@@ -6,6 +6,9 @@ body {
   color: #666;
   background-color: #d9d97b;
 }
+body.no_scroll {
+  overflow: hidden;
+}
 :focus {
   outline: none !important;
 }
@@ -195,18 +198,15 @@ body {
   color: #404040;
   margin-right: 12px;
 }
-#showcase .showcase-column > ul > li:hover {
-  border-radius: 3px;
-}
 #showcase .showcase-column > ul > li:hover .topbar,
 #showcase .showcase-column > ul > li:hover .bottombar {
   opacity: 1;
 }
 #showcase .showcase-column > ul > li:hover .topbar {
-  border-radius: 3px 3px 0 0;
+  border-bottom: 1px solid #fafafa;
 }
 #showcase .showcase-column > ul > li:hover .bottombar {
-  border-radius: 0 0 3px 3px;
+  border-top: 1px solid #fafafa;
 }
 #showcase .showcase-column > ul:hover > li {
   opacity: .65;
