@@ -153,7 +153,7 @@ App = (function() {
   App.prototype.base_url = function(uri, force_full) {
     var url;
     if (uri == null) {
-      uri = "";
+      uri = "/";
     }
     if (force_full == null) {
       force_full = false;
@@ -854,12 +854,19 @@ App.SitemapController = (function(superClass) {
 
   SitemapController.prototype.setup = function() {
     this.public_methods = ["index"];
+    this.requires("sitemap_urls");
     return SitemapController.__super__.setup.apply(this, arguments);
   };
 
   SitemapController.prototype.load = function() {
+    var j, len, url, urls;
+    urls = ["/", "/labs", "/archive"];
     this.sitemap_urls = [];
-    return this.sitemap_urls.push(App.base_url());
+    for (j = 0, len = urls.length; j < len; j++) {
+      url = urls[j];
+      this.sitemap_urls.push(App.base_url(url, true));
+    }
+    return this.loaded("sitemap_urls");
   };
 
   SitemapController.prototype.index = function() {

@@ -85,7 +85,7 @@ class App
   conf: (key) ->
     if @config?.hasOwnProperty(key) then @config[key] else false
 
-  base_url: (uri="", force_full=false) ->
+  base_url: (uri="/", force_full=false) ->
     return uri if process.env.NODE_ENV == 'development' && !force_full
     url = "#{@conf 'base_url' }#{uri}"
 
