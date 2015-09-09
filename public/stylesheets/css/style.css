@@ -62,34 +62,34 @@ body.no_scroll {
   left: 0;
   right: 0;
 }
-#showcase .content-column,
-#showcase .showcase-column {
+.content-column,
+.showcase-column {
   vertical-align: top;
   display: table-cell;
 }
-#showcase .content-column {
+.content-column {
   width: 28vw;
   min-width: 255px;
 }
-#showcase .content-column .content {
+.content-column .content {
   color: #111;
   margin: 30px;
   font-size: 20px;
   font-weight: 300;
   letter-spacing: 1px;
 }
-#showcase .content-column .content h3 {
+.content-column .content h3 {
   font-weight: 400;
   color: #333;
 }
-#showcase .content-column .content p {
+.content-column .content p {
   padding: 20px 0;
 }
-#showcase .content-column .content .contact form {
+.content-column .content .contact form {
   margin-top: 20px;
 }
-#showcase .content-column .content .contact input,
-#showcase .content-column .content .contact textarea {
+.content-column .content .contact input,
+.content-column .content .contact textarea {
   display: block;
   border: 1px solid #d8d8d8;
   color: #333;
@@ -101,15 +101,15 @@ body.no_scroll {
   border-radius: 2px;
   margin: 12px 0;
 }
-#showcase .content-column .content .contact input:focus,
-#showcase .content-column .content .contact textarea:focus {
+.content-column .content .contact input:focus,
+.content-column .content .contact textarea:focus {
   outline: none;
   border-color: #888;
 }
-#showcase .content-column .content .contact textarea {
+.content-column .content .contact textarea {
   resize: none;
 }
-#showcase .content-column .content .contact input[type=submit] {
+.content-column .content .contact input[type=submit] {
   padding: 12px;
   text-align: center;
   background-color: #3a3a3a;
@@ -120,14 +120,14 @@ body.no_scroll {
   -moz-transition: background-color 0.4s;
   -webkit-transition: background-color 0.4s;
 }
-#showcase .content-column .content .contact input[type=submit]:hover {
+.content-column .content .contact input[type=submit]:hover {
   background-color: #cece53;
   color: #3a3a3a;
 }
-#showcase .content-column .content .contact input[type=submit]:active {
+.content-column .content .contact input[type=submit]:active {
   background-color: #d8d8d8;
 }
-#showcase .showcase-column {
+.showcase-column {
   width: 72vw;
   box-sizing: border-box;
   margin: 0;
@@ -136,16 +136,16 @@ body.no_scroll {
   background: url(/images/stardust.png) repeat;
   padding: 0 30px 30px;
 }
-#showcase #showcase-projects {
+#showcase-projects {
   list-style-type: none;
 }
-#showcase #showcase-projects::after {
+#showcase-projects::after {
   content: "";
   display: block;
   clear: both;
   height: 0;
 }
-#showcase #showcase-projects > li {
+#showcase-projects > li {
   position: relative;
   background: no-repeat center center;
   background-size: cover;
@@ -160,11 +160,11 @@ body.no_scroll {
   margin: 30px 2%;
   box-shadow: 0 0 16px 0px #303030;
 }
-#showcase #showcase-projects > li.archive {
+#showcase-projects > li.archive {
   display: none;
 }
-#showcase #showcase-projects > li .topbar,
-#showcase #showcase-projects > li .bottombar {
+#showcase-projects > li .topbar,
+#showcase-projects > li .bottombar {
   opacity: 0;
   transition: opacity 0.4s;
   -moz-transition: opacity 0.4s;
@@ -175,26 +175,26 @@ body.no_scroll {
   background-color: rgba(250, 250, 250, 0.8);
   color: #404040;
 }
-#showcase #showcase-projects > li .topbar {
+#showcase-projects > li .topbar {
   position: absolute;
   top: 0;
 }
-#showcase #showcase-projects > li .project_link {
+#showcase-projects > li .project_link {
   color: inherit;
   text-decoration: none;
   float: right;
 }
-#showcase #showcase-projects > li .project_link:hover {
+#showcase-projects > li .project_link:hover {
   color: #0a61ca;
 }
-#showcase #showcase-projects > li .project_title {
+#showcase-projects > li .project_title {
   margin: 0;
 }
-#showcase #showcase-projects > li .bottombar {
+#showcase-projects > li .bottombar {
   position: absolute;
   bottom: 0;
 }
-#showcase #showcase-projects > li .technologies .pill {
+#showcase-projects > li .technologies .pill {
   display: inline-block;
   border: 1px solid #404040;
   border-radius: 6px;
@@ -202,23 +202,23 @@ body.no_scroll {
   color: #404040;
   margin-right: 12px;
 }
-#showcase #showcase-projects > li:hover .topbar,
-#showcase #showcase-projects > li:hover .bottombar {
+#showcase-projects > li:hover .topbar,
+#showcase-projects > li:hover .bottombar {
   opacity: 1;
 }
-#showcase #showcase-projects > li:hover .topbar {
+#showcase-projects > li:hover .topbar {
   border-bottom: 1px solid #fafafa;
 }
-#showcase #showcase-projects > li:hover .bottombar {
+#showcase-projects > li:hover .bottombar {
   border-top: 1px solid #fafafa;
 }
-#showcase #showcase-projects:hover > li {
+#showcase-projects:hover > li {
   opacity: .65;
 }
-#showcase #showcase-projects > li:hover {
+#showcase-projects > li:hover {
   opacity: 1;
 }
-#showcase img {
+img {
   cursor: pointer;
   height: auto;
   width: 100%;
@@ -235,6 +235,15 @@ body.no_scroll {
 }
 .other_groups a:hover {
   color: #999;
+}
+.skills .skill {
+  margin-bottom: 16px;
+}
+.skills .skill p {
+  margin: 0 0 0 16px;
+  padding: 0;
+  color: #444;
+  font-size: 16px;
 }
 .overlay {
   position: fixed;
