@@ -224,6 +224,18 @@ body.no_scroll {
   width: 100%;
   max-height: 420px;
 }
+.other_groups {
+  color: #999;
+}
+.other_groups a {
+  font-size: 18px;
+  color: #fafafa;
+  text-decoration: none;
+  margin-left: 12px;
+}
+.other_groups a:hover {
+  color: #999;
+}
 .overlay {
   position: fixed;
   top: 0;

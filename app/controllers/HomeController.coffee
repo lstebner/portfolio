@@ -33,16 +33,19 @@ class App.HomeController extends Portfolio.Controller
     @view_data.title = "Luke Stebner | Bay Area Web Developer"
     @view_data.projects = @showcase_projects
     @view_data.js_opts = projects_data: @showcase_projects
+    @view_data.other_groups = ["Labs", "Archive"]
     @render "index"
 
   labs: ->
     @view_data.title = "Labs Projects - Luke Stebner"
     @view_data.projects = @labs_projects
     @view_data.js_opts = projects_data: @labs_projects
+    @view_data.other_groups = [["Showcase", "/"], "Archive"]
     @render "index"
 
   archive: ->
     @view_data.title = "Archived Projects - Bay Area Web Developer"
     @view_data.projects = @archive_projects
     @view_data.js_opts = projects_data: @archive_projects
+    @view_data.other_groups = [["Showcase", "/"], "Labs"]
     @render "index"

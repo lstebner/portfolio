@@ -939,6 +939,7 @@ App.HomeController = (function(superClass) {
     this.view_data.js_opts = {
       projects_data: this.showcase_projects
     };
+    this.view_data.other_groups = ["Labs", "Archive"];
     return this.render("index");
   };
 
@@ -948,6 +949,7 @@ App.HomeController = (function(superClass) {
     this.view_data.js_opts = {
       projects_data: this.labs_projects
     };
+    this.view_data.other_groups = [["Showcase", "/"], "Archive"];
     return this.render("index");
   };
 
@@ -957,6 +959,7 @@ App.HomeController = (function(superClass) {
     this.view_data.js_opts = {
       projects_data: this.archive_projects
     };
+    this.view_data.other_groups = [["Showcase", "/"], "Labs"];
     return this.render("index");
   };
 
