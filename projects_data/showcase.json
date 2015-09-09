@@ -44,22 +44,6 @@
     }
     ,
     {
-        "title": "Is there a game today?",
-        "order": 4,
-        "slug": "arethegiantsplayingtoday",
-        "description": "This collection of sites started as a simple project to make 'Are the Giants playing today'. It was meant to tell me just that, are the Giants playing today? Last year I decided to spread the love and clone the site a few times, out of it came this little project which grows as I tinker with it.",
-        "display_url": "http://arethegiantsplayingtoday.com",
-        "full_url": "http://arethegiantsplayingtoday.com",
-        "technologies": ["JavaScript", "HTML/CSS", "nodejs"],
-        "images": [
-            "/images/projects/itagt-sfgiants-yes-now.jpg",
-            "/images/projects/itagt-sfgiants-spring-training.jpg",
-            "/images/projects/itagt-yankees-yes-later.jpg",
-            "/images/projects/itagt-pirates-yes-over.jpg"
-        ]
-    }
-    ,
-    {
         "title": "My Brick Builds",
         "order": 5,
         "slug": "mbb",
