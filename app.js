@@ -699,6 +699,7 @@ Portfolio.App = (function(superClass) {
   App.prototype.setup_routes = function() {
     this.route("/", "home#index");
     this.route("/labs", "home#labs");
+    this.route("/archive", "home#archive");
     this.route("/contact-submit", "contact#submit", "post");
     return this.route("/sitemap", "sitemap#index");
   };
@@ -790,6 +791,32 @@ Portfolio.App = (function(superClass) {
 
 })(App);
 
+Portfolio.Query = (function() {
+  function Query() {}
+
+  Query.get_projects = function(query, fn) {
+    var find, sort;
+    query = _.extend({
+      group: "sites",
+      orderby: "order"
+    }, query);
+    find = {
+      archived: false,
+      group: query.group
+    };
+    sort = {};
+    sort[query.orderby] = 1;
+    return App.Models.Project.find(find).sort(sort).exec((function(_this) {
+      return function(err, docs) {
+        return typeof fn === "function" ? fn(err, docs) : void 0;
+      };
+    })(this));
+  };
+
+  return Query;
+
+})();
+
 Portfolio.Controller = (function(superClass) {
   extend(Controller, superClass);
 
@@ -845,7 +872,7 @@ App.SitemapController = (function(superClass) {
 })(Portfolio.Controller);
 
 App.HomeController = (function(superClass) {
-  var fs;
+  var fs, query;
 
   extend(HomeController, superClass);
 
@@ -855,15 +882,18 @@ App.HomeController = (function(superClass) {
 
   fs = Requires.fs;
 
+  query = Portfolio.Query;
+
   HomeController.prototype.name = "HomeController";
 
   HomeController.prototype.view_class = Portfolio.HomeView;
 
   HomeController.prototype.setup = function() {
     this.projects_data = [];
-    this.public_methods = ["index", "labs"];
-    this.requires("sites_projects", "index");
+    this.public_methods = ["index", "labs", "archive"];
+    this.requires("showcase_projects", "index");
     this.requires("labs_projects", "labs");
+    this.requires("archive_projects", "archive");
     return HomeController.__super__.setup.apply(this, arguments);
   };
 
@@ -871,29 +901,33 @@ App.HomeController = (function(superClass) {
     if (!HomeController.__super__.load.apply(this, arguments)) {
       return;
     }
-    if (load_what.indexOf("sites_projects") > -1) {
-      App.Models.Project.find({
-        archived: false,
-        group: "sites"
-      }).sort({
-        order: 1
-      }).exec((function(_this) {
+    if (load_what.indexOf("showcase_projects") > -1) {
+      query.get_projects({
+        group: "showcase"
+      }, (function(_this) {
         return function(err, docs) {
-          _this.sites_projects = docs;
-          return _this.loaded("sites_projects");
+          _this.showcase_projects = docs;
+          return _this.loaded("showcase_projects");
         };
       })(this));
     }
     if (load_what.indexOf("labs_projects") > -1) {
-      return App.Models.Project.find({
-        archived: false,
+      query.get_projects({
         group: "labs"
-      }).sort({
-        order: 1
-      }).exec((function(_this) {
+      }, (function(_this) {
         return function(err, docs) {
           _this.labs_projects = docs;
           return _this.loaded("labs_projects");
+        };
+      })(this));
+    }
+    if (load_what.indexOf("archive_projects") > -1) {
+      return query.get_projects({
+        group: "archive"
+      }, (function(_this) {
+        return function(err, docs) {
+          _this.archive_projects = docs;
+          return _this.loaded("archive_projects");
         };
       })(this));
     }
@@ -901,19 +935,27 @@ App.HomeController = (function(superClass) {
 
   HomeController.prototype.index = function() {
     this.view_data.title = "Luke Stebner | Bay Area Web Developer";
-    this.view_data.projects = this.sites_projects;
+    this.view_data.projects = this.showcase_projects;
     this.view_data.js_opts = {
-      projects_data: this.sites_projects
+      projects_data: this.showcase_projects
     };
     return this.render("index");
   };
 
   HomeController.prototype.labs = function() {
-    console.log("dolab");
-    this.view_data.title = "Labs - Luke Stebner | Bay Area Web Developer";
+    this.view_data.title = "Labs Projects - Luke Stebner";
     this.view_data.projects = this.labs_projects;
     this.view_data.js_opts = {
       projects_data: this.labs_projects
+    };
+    return this.render("index");
+  };
+
+  HomeController.prototype.archive = function() {
+    this.view_data.title = "Archived Projects - Bay Area Web Developer";
+    this.view_data.projects = this.archive_projects;
+    this.view_data.js_opts = {
+      projects_data: this.archive_projects
     };
     return this.render("index");
   };

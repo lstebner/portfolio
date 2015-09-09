@@ -1,25 +1,25 @@
 [
     {
         "title": "Selectvids",
-        "archived": true,
         "slug": "selectvids",
         "description": "SelectVids was an idea of a friend of mine, but I saw it as a good opportunity to further my skills with Backbone so I did all development and now we use it as a place to save our favorite videos for other people to also discover.",
         "display_url": "selectvids.com",
         "full_url": "http://selectvids.com",
         "technologies": ["nodejs", "backbone", "mongo", "jade", "jQuery", "underscore"],
         "images": [
+            "/images/projects/selectvids.jpg"
         ]
     }
     ,
     {
         "title": "Kanyeipsum",
-        "archived": true,
         "slug": "kanyeipsum",
         "description": "KanyeIpsum is a Lorem Ipsum generator based entirely off of Kanye West lyrics. It's offensive and amusing; just like if the rapper himself were in your website while you develop.",
         "display_url": "kanyeipsum.me",
         "full_url": "http://kanyeipsum.me",
         "technologies": ["nodejs", "jade", "jQuery"],
         "images": [
+            "/images/projects/kanyeipsum.jpg"
         ]
     }
     ]
