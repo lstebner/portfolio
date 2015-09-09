@@ -11,5 +11,6 @@ App.Schemas.Project = new Schema {
   technologies: type: Schema.Types.Mixed, default: []
   images: type: Schema.Types.Mixed, default: []
   archived: type: Boolean, default: false
+  group: type: String, default: "default"
 }
 

@@ -3,12 +3,17 @@ class App.SitemapController extends Portfolio.Controller
 
   setup: ->
     @public_methods = ["index"]
+    @requires "sitemap_urls"
 
     super
 
   load: ->
+    urls = ["/", "/labs", "/archive"]
     @sitemap_urls = []
-    @sitemap_urls.push App.base_url()
+    for url in urls
+      @sitemap_urls.push App.base_url url, true
+      
+    @loaded "sitemap_urls"
 
   index: ->
     @res.header 'Content-type', 'text/plain'

@@ -3,9 +3,13 @@
     left: 0;
     right: 0;
 
+    .content-column, .showcase-column{
+        vertical-align: top;        
+        display: table-cell;
+    }
+
     .content-column{
-        float: left;
-        width: 28%;
+        width: 28vw;
         min-width: 255px;
 
         .content{
@@ -78,18 +82,17 @@
     }
 
     .showcase-column{
-        width: 72%;
-        // min-width: 654px;
-        float: right;
-    }
-
-    .showcase-column>ul{
+        width: 72vw;
+        box-sizing: border-box;
         margin: 0;
-        list-style-type: none;
         position: relative;
         background-color: @off_color;
         background: @off_bg_image repeat;
         padding: 0 30px 30px;
+    }
+
+    #showcase-projects{
+        list-style-type: none;
 
         &::after{
             content: "";
@@ -193,5 +196,20 @@
         height: auto;
         width: 100%;
         max-height: 420px;
+    }
+}
+
+.other_groups{
+    color: #999;
+
+    a{
+        font-size: 18px;
+        color: #fafafa;
+        text-decoration: none;
+        margin-left: 12px;
+
+        &:hover{
+            color: #999;
+        }
     }
 }
