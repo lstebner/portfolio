@@ -79,7 +79,21 @@ class Portfolio.App extends App
           group_name = filename.substr 0, filename.indexOf(".")
           read_projects group_name
 
+class Portfolio.Query
+  @get_projects: (query, fn) ->
+    query = _.extend
+      group: "sites"
+      orderby: "order"
+      , query
 
+    find =
+      archived: false
+      group: query.group
+    sort = {}
+    sort[query.orderby] = 1
+
+    App.Models.Project.find(find).sort(sort).exec (err, docs) =>
+      fn? err, docs
 
 
 class Portfolio.Controller extends App.Controller
