@@ -1,0 +1,30 @@
+[
+    {
+        "title": "Is there a game today?",
+        "order": 1,
+        "slug": "arethegiantsplayingtoday",
+        "description": "This collection of sites started as a simple project to make 'Are the Giants playing today'. It was meant to tell me just that, are the Giants playing today? Last year I decided to spread the love and clone the site a few times, out of it came this little project which grows as I tinker with it.",
+        "display_url": "http://arethegiantsplayingtoday.com",
+        "full_url": "http://arethegiantsplayingtoday.com",
+        "technologies": ["JavaScript", "HTML/CSS", "nodejs"],
+        "images": [
+            "/images/projects/itagt-sfgiants-yes-now.jpg",
+            "/images/projects/itagt-sfgiants-spring-training.jpg",
+            "/images/projects/itagt-yankees-yes-later.jpg",
+            "/images/projects/itagt-pirates-yes-over.jpg"
+        ]
+    }
+    ,
+    {
+        "title": "JRule",
+        "order": 2,
+        "slug": "jrule",
+        "description": "JRule is a bookmarklet powered set of tools focused around measuring things on web pages.",
+        "display_url": "https://github.com/lstebner/jrule",
+        "full_url": "https://github.com/lstebner/jrule",
+        "technologies": ["javascript"],
+        "images": [
+            "/images/projects/jrule.jpg"
+        ]
+    }
+]

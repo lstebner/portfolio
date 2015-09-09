@@ -44,22 +44,6 @@
     }
     ,
     {
-        "title": "Is there a game today?",
-        "order": 4,
-        "slug": "arethegiantsplayingtoday",
-        "description": "This collection of sites started as a simple project to make 'Are the Giants playing today'. It was meant to tell me just that, are the Giants playing today? Last year I decided to spread the love and clone the site a few times, out of it came this little project which grows as I tinker with it.",
-        "display_url": "http://arethegiantsplayingtoday.com",
-        "full_url": "http://arethegiantsplayingtoday.com",
-        "technologies": ["JavaScript", "HTML/CSS", "nodejs"],
-        "images": [
-            "/images/projects/itagt-sfgiants-yes-now.jpg",
-            "/images/projects/itagt-sfgiants-spring-training.jpg",
-            "/images/projects/itagt-yankees-yes-later.jpg",
-            "/images/projects/itagt-pirates-yes-over.jpg"
-        ]
-    }
-    ,
-    {
         "title": "My Brick Builds",
         "order": 5,
         "slug": "mbb",
@@ -140,30 +124,6 @@
         "images": [
             "/images/projects/beansandhops.jpg",
             "/images/projects/beansandhops-post.jpg"
-        ]
-    }
-    ,
-    {
-        "title": "Selectvids",
-        "archived": true,
-        "slug": "selectvids",
-        "description": "SelectVids was an idea of a friend of mine, but I saw it as a good opportunity to further my skills with Backbone so I did all development and now we use it as a place to save our favorite videos for other people to also discover.",
-        "display_url": "selectvids.com",
-        "full_url": "http://selectvids.com",
-        "technologies": ["nodejs", "backbone", "mongo", "jade", "jQuery", "underscore"],
-        "images": [
-        ]
-    }
-    ,
-    {
-        "title": "Kanyeipsum",
-        "archived": true,
-        "slug": "kanyeipsum",
-        "description": "KanyeIpsum is a Lorem Ipsum generator based entirely off of Kanye West lyrics. It's offensive and amusing; just like if the rapper himself were in your website while you develop.",
-        "display_url": "kanyeipsum.me",
-        "full_url": "http://kanyeipsum.me",
-        "technologies": ["nodejs", "jade", "jQuery"],
-        "images": [
         ]
     }
 ]

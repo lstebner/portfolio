@@ -24,6 +24,8 @@ class Portfolio.App extends App
 
   setup_routes: ->
     @route "/", "home#index"
+    @route "/labs", "home#labs"
+    @route "/archive", "home#archive"
     @route "/contact-submit", "contact#submit", "post"
     @route "/sitemap", "sitemap#index"
 
@@ -55,20 +57,44 @@ class Portfolio.App extends App
     console.log "updating projects data"
     App.Models.Project.find({}).remove (err) ->
 
-    fs.readFile './projects_data.json', 'UTF-8', (err, contents) =>
-      return console.log "error reading projects_data: #{err}" if err
-      projects_data = JSON.parse contents
-      errors = []
-      for project in projects_data
-        p = new App.Models.Project project
-        p.save (err) => errors.push(err) if err
+    fs.readdir "#{__dirname}/projects_data", (err, files) =>
+      num_groups = 0
+      read_projects = (group_name) =>
+        num_groups += 1
+        fs.readFile "#{__dirname}/projects_data/#{filename}", 'UTF-8', (err, contents) =>
+          return console.log "error reading projects_data: #{err}" if err
+          projects_data = JSON.parse contents
+          errors = []
+          for project in projects_data
+            project.group = group_name
+            p = new App.Models.Project project
+            p.save (err) => errors.push(err) if err
 
-      console.log "done updating projects, #{errors.length} errors"
-      if errors.length
-        for err, i in errors
-          console.log "projects err #{i}: #{err}"
+          console.log "done updating projects for group '#{group_name}': #{projects_data.length} projects, #{errors.length} errors"
+          if errors.length
+            for err, i in errors
+              console.log "projects err #{i}: #{err}"
 
+      for filename in files
+        if filename.indexOf(".json") > -1
+          group_name = filename.substr 0, filename.indexOf(".")
+          read_projects group_name
 
+class Portfolio.Query
+  @get_projects: (query, fn) ->
+    query = _.extend
+      group: "sites"
+      orderby: "order"
+      , query
+
+    find =
+      archived: false
+      group: query.group
+    sort = {}
+    sort[query.orderby] = 1
+
+    App.Models.Project.find(find).sort(sort).exec (err, docs) =>
+      fn? err, docs
 
 
 class Portfolio.Controller extends App.Controller

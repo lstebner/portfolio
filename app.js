@@ -153,7 +153,7 @@ App = (function() {
   App.prototype.base_url = function(uri, force_full) {
     var url;
     if (uri == null) {
-      uri = "";
+      uri = "/";
     }
     if (force_full == null) {
       force_full = false;
@@ -283,6 +283,10 @@ App.Schemas.Project = new Schema({
   archived: {
     type: Boolean,
     "default": false
+  },
+  group: {
+    type: String,
+    "default": "default"
   }
 });
 
@@ -387,6 +391,9 @@ App.Controller = (function() {
     if (for_what == null) {
       for_what = "all";
     }
+    if (!_.isArray(needs_list)) {
+      needs_list = [needs_list];
+    }
     _register = (function(_this) {
       return function(method_name, needs_list) {
         return _this.requirements_list[method_name] = _this.requirements_list[method_name] != null ? _.union(_this.requirements_list[method_name], needs_list) : needs_list;
@@ -433,7 +440,8 @@ App.Controller = (function() {
         }
         true;
       } else {
-        false;
+        console.log("method not found or not public", this.name + "::" + this.requested_method);
+        this.do_404();
       }
     } else {
       setTimeout((function(_this) {
@@ -690,6 +698,8 @@ Portfolio.App = (function(superClass) {
 
   App.prototype.setup_routes = function() {
     this.route("/", "home#index");
+    this.route("/labs", "home#labs");
+    this.route("/archive", "home#archive");
     this.route("/contact-submit", "contact#submit", "post");
     return this.route("/sitemap", "sitemap#index");
   };
@@ -728,32 +738,51 @@ Portfolio.App = (function(superClass) {
   App.prototype.init_projects = function() {
     console.log("updating projects data");
     App.Models.Project.find({}).remove(function(err) {});
-    return fs.readFile('./projects_data.json', 'UTF-8', (function(_this) {
-      return function(err, contents) {
-        var errors, i, j, k, len, len1, p, project, projects_data, results;
-        if (err) {
-          return console.log("error reading projects_data: " + err);
-        }
-        projects_data = JSON.parse(contents);
-        errors = [];
-        for (j = 0, len = projects_data.length; j < len; j++) {
-          project = projects_data[j];
-          p = new App.Models.Project(project);
-          p.save(function(err) {
+    return fs.readdir(__dirname + "/projects_data", (function(_this) {
+      return function(err, files) {
+        var filename, group_name, j, len, num_groups, read_projects, results;
+        num_groups = 0;
+        read_projects = function(group_name) {
+          num_groups += 1;
+          return fs.readFile(__dirname + "/projects_data/" + filename, 'UTF-8', function(err, contents) {
+            var errors, i, j, k, len, len1, p, project, projects_data, results;
             if (err) {
-              return errors.push(err);
+              return console.log("error reading projects_data: " + err);
+            }
+            projects_data = JSON.parse(contents);
+            errors = [];
+            for (j = 0, len = projects_data.length; j < len; j++) {
+              project = projects_data[j];
+              project.group = group_name;
+              p = new App.Models.Project(project);
+              p.save(function(err) {
+                if (err) {
+                  return errors.push(err);
+                }
+              });
+            }
+            console.log("done updating projects for group '" + group_name + "': " + projects_data.length + " projects, " + errors.length + " errors");
+            if (errors.length) {
+              results = [];
+              for (i = k = 0, len1 = errors.length; k < len1; i = ++k) {
+                err = errors[i];
+                results.push(console.log("projects err " + i + ": " + err));
+              }
+              return results;
             }
           });
-        }
-        console.log("done updating projects, " + errors.length + " errors");
-        if (errors.length) {
-          results = [];
-          for (i = k = 0, len1 = errors.length; k < len1; i = ++k) {
-            err = errors[i];
-            results.push(console.log("projects err " + i + ": " + err));
+        };
+        results = [];
+        for (j = 0, len = files.length; j < len; j++) {
+          filename = files[j];
+          if (filename.indexOf(".json") > -1) {
+            group_name = filename.substr(0, filename.indexOf("."));
+            results.push(read_projects(group_name));
+          } else {
+            results.push(void 0);
           }
-          return results;
         }
+        return results;
       };
     })(this));
   };
@@ -761,6 +790,32 @@ Portfolio.App = (function(superClass) {
   return App;
 
 })(App);
+
+Portfolio.Query = (function() {
+  function Query() {}
+
+  Query.get_projects = function(query, fn) {
+    var find, sort;
+    query = _.extend({
+      group: "sites",
+      orderby: "order"
+    }, query);
+    find = {
+      archived: false,
+      group: query.group
+    };
+    sort = {};
+    sort[query.orderby] = 1;
+    return App.Models.Project.find(find).sort(sort).exec((function(_this) {
+      return function(err, docs) {
+        return typeof fn === "function" ? fn(err, docs) : void 0;
+      };
+    })(this));
+  };
+
+  return Query;
+
+})();
 
 Portfolio.Controller = (function(superClass) {
   extend(Controller, superClass);
@@ -799,12 +854,19 @@ App.SitemapController = (function(superClass) {
 
   SitemapController.prototype.setup = function() {
     this.public_methods = ["index"];
+    this.requires("sitemap_urls");
     return SitemapController.__super__.setup.apply(this, arguments);
   };
 
   SitemapController.prototype.load = function() {
+    var j, len, url, urls;
+    urls = ["/", "/labs", "/archive"];
     this.sitemap_urls = [];
-    return this.sitemap_urls.push(App.base_url());
+    for (j = 0, len = urls.length; j < len; j++) {
+      url = urls[j];
+      this.sitemap_urls.push(App.base_url(url, true));
+    }
+    return this.loaded("sitemap_urls");
   };
 
   SitemapController.prototype.index = function() {
@@ -817,7 +879,7 @@ App.SitemapController = (function(superClass) {
 })(Portfolio.Controller);
 
 App.HomeController = (function(superClass) {
-  var fs;
+  var fs, query;
 
   extend(HomeController, superClass);
 
@@ -827,14 +889,18 @@ App.HomeController = (function(superClass) {
 
   fs = Requires.fs;
 
+  query = Portfolio.Query;
+
   HomeController.prototype.name = "HomeController";
 
   HomeController.prototype.view_class = Portfolio.HomeView;
 
   HomeController.prototype.setup = function() {
     this.projects_data = [];
-    this.public_methods = ["index", "get_projects"];
-    this.requires(["projects_data"]);
+    this.public_methods = ["index", "labs", "archive"];
+    this.requires("showcase_projects", "index");
+    this.requires("labs_projects", "labs");
+    this.requires("archive_projects", "archive");
     return HomeController.__super__.setup.apply(this, arguments);
   };
 
@@ -842,15 +908,33 @@ App.HomeController = (function(superClass) {
     if (!HomeController.__super__.load.apply(this, arguments)) {
       return;
     }
-    if (load_what.indexOf("projects_data") > -1) {
-      return App.Models.Project.find({
-        archived: false
-      }).sort({
-        order: 1
-      }).exec((function(_this) {
+    if (load_what.indexOf("showcase_projects") > -1) {
+      query.get_projects({
+        group: "showcase"
+      }, (function(_this) {
         return function(err, docs) {
-          _this.projects_data = docs;
-          return _this.loaded("projects_data");
+          _this.showcase_projects = docs;
+          return _this.loaded("showcase_projects");
+        };
+      })(this));
+    }
+    if (load_what.indexOf("labs_projects") > -1) {
+      query.get_projects({
+        group: "labs"
+      }, (function(_this) {
+        return function(err, docs) {
+          _this.labs_projects = docs;
+          return _this.loaded("labs_projects");
+        };
+      })(this));
+    }
+    if (load_what.indexOf("archive_projects") > -1) {
+      return query.get_projects({
+        group: "archive"
+      }, (function(_this) {
+        return function(err, docs) {
+          _this.archive_projects = docs;
+          return _this.loaded("archive_projects");
         };
       })(this));
     }
@@ -858,10 +942,31 @@ App.HomeController = (function(superClass) {
 
   HomeController.prototype.index = function() {
     this.view_data.title = "Luke Stebner | Bay Area Web Developer";
-    this.view_data.projects = this.projects_data;
+    this.view_data.projects = this.showcase_projects;
     this.view_data.js_opts = {
-      projects_data: this.projects_data
+      projects_data: this.showcase_projects
     };
+    this.view_data.other_groups = ["Labs", "Archive"];
+    return this.render("index");
+  };
+
+  HomeController.prototype.labs = function() {
+    this.view_data.title = "Labs Projects - Luke Stebner";
+    this.view_data.projects = this.labs_projects;
+    this.view_data.js_opts = {
+      projects_data: this.labs_projects
+    };
+    this.view_data.other_groups = [["Showcase", "/"], "Archive"];
+    return this.render("index");
+  };
+
+  HomeController.prototype.archive = function() {
+    this.view_data.title = "Archived Projects - Bay Area Web Developer";
+    this.view_data.projects = this.archive_projects;
+    this.view_data.js_opts = {
+      projects_data: this.archive_projects
+    };
+    this.view_data.other_groups = [["Showcase", "/"], "Labs"];
     return this.render("index");
   };
 

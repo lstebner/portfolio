@@ -8,17 +8,26 @@ block content
             span - Check out some of my work below
 
     #showcase
-        .showcase-column
-            ul#showcase-projects
-                for project in projects
-                    include partials/project
-
         .content-column
             .content
                 h3 Located in the San Francisco Bay Area
                 p I work with a number of technologies including JavaScript (Coffeescript), HTML, CSS (LESS, SCSS), NodeJS, Ruby on Rails, PHP, MongoDB and MySQL. Although during the day I do this at Scribd, I'm also available to be hired to help with your project, or to build a custom website for you!
 
                 include partials/contact
+
+        .showcase-column
+            ul#showcase-projects
+                for project in projects
+                    include partials/project
+
+            if typeof(other_groups) != "undefined"
+                .other_groups
+                    | Looking for something else? Maybe one of these places...
+                    for group in other_groups
+                        if typeof(group) == "string"
+                            a(href="/#{group.toLowerCase()}")= group
+                        else
+                            a(href="#{group[1]}")= group[0]
 
     .overlay#master-overlay
     .overlay-content#project-overlay
