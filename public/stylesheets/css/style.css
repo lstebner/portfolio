@@ -69,7 +69,7 @@ body.no_scroll {
 }
 .content-column {
   width: 28vw;
-  min-width: 255px;
+  min-width: 300px;
 }
 .content-column .content {
   color: #111;
@@ -129,6 +129,7 @@ body.no_scroll {
 }
 .showcase-column {
   width: 72vw;
+  min-width: 300px;
   box-sizing: border-box;
   margin: 0;
   position: relative;
@@ -513,15 +514,9 @@ img {
   }
 }
 @media (max-width: 990px) {
-  #showcase .showcase-column {
-    width: 100%;
-  }
   #showcase .showcase-column ul {
     padding-right: 0;
     padding-left: 8px;
-  }
-  #showcase .content-column {
-    width: 60%;
   }
 }
 @media (max-width: 600px) {
