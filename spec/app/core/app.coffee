@@ -1,5 +1,3 @@
-# @codekit-prepend "__includes"
-
 app = null
 
 test_app =
