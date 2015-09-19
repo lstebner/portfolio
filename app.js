@@ -33,7 +33,8 @@ App = (function() {
     meta_description: '',
     css_version: 1,
     js_version: 1,
-    port: 3000
+    port: 3000,
+    debug: false
   };
 
   App.set_site = function(site) {
@@ -47,7 +48,11 @@ App = (function() {
     if (appclass == null) {
       appclass = App;
     }
-    return this.site = appclass["init"](opts);
+    if (appclass === App) {
+      return this.site = new App(opts);
+    } else {
+      return this.site = appclass["init"](opts);
+    }
   };
 
   App.slugify = function(title, d) {
@@ -95,22 +100,27 @@ App = (function() {
     }
     this.env = process.env.NODE_ENV;
     this.site_name = opts.site_name, this.config = opts.config, this.app = opts.app, this.mongoose = opts.mongoose;
-    this.config = _.extend(CONF_DEFAULTS, this.config);
+    this.config = _.extend(CONF_DEFAULTS, this.config || {});
     this.load_environment_config();
     this.setup();
   }
 
   App.prototype.load_environment_config = function() {
-    var contents, e, env_conf;
-    contents = fs.readFileSync(__dirname + "/app/conf/" + this.env + ".conf", "UTF-8");
+    var contents, e, env_conf, filepath;
+    filepath = this.env === "test" ? __dirname + "/test.conf" : __dirname + "/app/conf/" + this.env + ".conf";
+    contents = fs.readFileSync(filepath, "UTF-8");
     try {
       env_conf = JSON.parse(contents);
       this.config = _.extend(this.config, env_conf);
+      if (this.config.debug) {
+        return console.log(this.env + " config loaded");
+      }
     } catch (_error) {
       e = _error;
-      console.log("error! parsing json in " + this.env + " conf");
+      if (this.config.debug) {
+        return console.log("error! parsing json in " + this.env + " conf");
+      }
     }
-    return console.log(this.env + " config loaded");
   };
 
   App.prototype.before_ready = function() {
@@ -118,7 +128,7 @@ App = (function() {
   };
 
   App.prototype.setup = function() {
-    var key, ref, val;
+    var key, val;
     for (key in Requires) {
       val = Requires[key];
       this[key] = val;
@@ -128,8 +138,17 @@ App = (function() {
     this.setup_mongoose();
     this.setup_routes();
     this.listener = this.app.listen(this.config.port);
-    console.log("Express server listening on port %d in %s mode", (ref = this.listener) != null ? ref.address().port : void 0, this.app.settings.env);
+    if (this.listener) {
+      if (this.config.debug) {
+        console.log("Express server listening on port %d in %s mode", this.listener.address().port, this.app.settings.env);
+      }
+    } else {
+      if (this.config.debug) {
+        console.log("listener did not start");
+      }
+    }
     this.before_ready();
+    this.is_setup = true;
     return this.ready();
   };
 
@@ -143,7 +162,7 @@ App = (function() {
 
   App.prototype.conf = function(key) {
     var ref;
-    if ((ref = this.config) != null ? ref.hasOwnProperty(key) : void 0) {
+    if ((key != null) && ((ref = this.config) != null ? ref.hasOwnProperty(key) : void 0)) {
       return this.config[key];
     } else {
       return false;
@@ -175,7 +194,7 @@ App = (function() {
     controller_name = dest_sp[0].substr(0, 1).toUpperCase() + dest_sp[0].substring(1);
     controller = App[controller_name + "Controller"];
     if (controller == null) {
-      return console.log("App route error, controller not found: " + controller_name);
+      return (this.config.debug ? console.log("App route error, controller not found: " + controller_name) : false);
     }
     method_name = dest_sp[1] != null ? dest_sp[1] : default_method;
     switch (type) {

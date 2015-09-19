@@ -9,6 +9,7 @@ class App
     css_version: 1
     js_version: 1
     port: 3000
+    debug: false
 
   @set_site: (@site) ->
 
@@ -61,9 +62,9 @@ class App
     try
       env_conf = JSON.parse contents
       @config = _.extend @config, env_conf
-      console.log "#{@env} config loaded"
+      console.log "#{@env} config loaded" if @config.debug
     catch e
-      console.log "error! parsing json in #{@env} conf"
+      console.log "error! parsing json in #{@env} conf" if @config.debug
 
   before_ready: -> 1
 
@@ -79,9 +80,9 @@ class App
 
     @listener = @app.listen @config.port
     if @listener
-      console.log "Express server listening on port %d in %s mode", @listener.address().port, @app.settings.env
+      console.log "Express server listening on port %d in %s mode", @listener.address().port, @app.settings.env if @config.debug
     else
-      console.log "listener did not start"
+      console.log "listener did not start" if @config.debug
 
     @before_ready()
 
@@ -108,7 +109,7 @@ class App
 
     controller_name = dest_sp[0].substr(0, 1).toUpperCase() + dest_sp[0].substring(1)
     controller = App["#{controller_name}Controller"]
-    return console.log "App route error, controller not found: #{controller_name}" unless controller?
+    return (if @config.debug then console.log "App route error, controller not found: #{controller_name}" else false) unless controller?
 
     method_name = if dest_sp[1]? then dest_sp[1] else default_method
 
