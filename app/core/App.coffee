@@ -14,7 +14,10 @@ class App
 
   # call to init your app by passing your custom app class second
   @init: (opts={}, appclass=App) ->
-    @site = appclass["init"] opts
+    if appclass == App
+      @site = new App opts
+    else
+      @site = appclass["init"] opts
 
   @slugify: (title, d) ->
     replace = "-"
@@ -43,19 +46,24 @@ class App
     @env = process.env.NODE_ENV
     {@site_name, @config, @app, @mongoose} = opts
 
-    @config = _.extend CONF_DEFAULTS, @config
+    @config = _.extend CONF_DEFAULTS, (@config || {})
 
     @load_environment_config()
     @setup()
 
   load_environment_config: ->
-    contents = fs.readFileSync "#{__dirname}/app/conf/#{@env}.conf", "UTF-8"
+    filepath = if @env == "test"
+      "#{__dirname}/test.conf"
+    else
+      "#{__dirname}/app/conf/#{@env}.conf"
+
+    contents = fs.readFileSync filepath, "UTF-8"
     try
       env_conf = JSON.parse contents
       @config = _.extend @config, env_conf
+      console.log "#{@env} config loaded"
     catch e
       console.log "error! parsing json in #{@env} conf"
-    console.log "#{@env} config loaded"
 
   before_ready: -> 1
 
@@ -70,10 +78,14 @@ class App
     @setup_routes()
 
     @listener = @app.listen @config.port
-    console.log "Express server listening on port %d in %s mode", @listener?.address().port, @app.settings.env
+    if @listener
+      console.log "Express server listening on port %d in %s mode", @listener.address().port, @app.settings.env
+    else
+      console.log "listener did not start"
 
     @before_ready()
 
+    @is_setup = true
     @ready()
 
   # override if you want
@@ -83,7 +95,7 @@ class App
     @mongoose.connect "mongodb://#{@conf 'db_host'}/#{@conf 'db_name'}"
 
   conf: (key) ->
-    if @config?.hasOwnProperty(key) then @config[key] else false
+    if key? && @config?.hasOwnProperty(key) then @config[key] else false
 
   base_url: (uri="/", force_full=false) ->
     return uri if process.env.NODE_ENV == 'development' && !force_full
