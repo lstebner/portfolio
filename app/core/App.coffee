@@ -11,6 +11,8 @@ class App
     port: 3000
     debug: false
 
+  ROOT_DIR = __dirname.replace(/spec(\/|)/, "")
+
   @set_site: (@site) ->
 
   # call to init your app by passing your custom app class second
@@ -53,10 +55,7 @@ class App
     @setup()
 
   load_environment_config: ->
-    filepath = if @env == "test"
-      "#{__dirname}/test.conf"
-    else
-      "#{__dirname}/app/conf/#{@env}.conf"
+    filepath = "#{ROOT_DIR}/app/conf/#{@env}.conf"
 
     contents = fs.readFileSync filepath, "UTF-8"
     try
@@ -144,14 +143,17 @@ class App
       @app.use express.errorHandler()
       @configure_for_production()
 
+    # TODO: state machine
+    @is_configured = true
+
   always_configure: ->
     #override me for setup actions
-    @app.set "views", __dirname + "/views"
+    @app.set "views", ROOT_DIR + "/views"
     @app.set "view engine", "jade"
     @app.use express.bodyParser()
     @app.use express.methodOverride()
     @app.use @app.router
-    @app.use express.static(__dirname + "/public")
+    @app.use express.static(ROOT_DIR + "/public")
 
   configure_for_development: ->
     #override me specifically for development
