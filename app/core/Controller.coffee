@@ -29,9 +29,9 @@ class App.Controller
 
     if _.isObject(for_what)
       methods = if for_what.except?
-        _.difference @public_methods, for_what
+        _.difference @public_methods, for_what.except
       else if for_what.only?
-        _.intersection @public_methods, for_what
+        _.intersection @public_methods, for_what.only
 
       for m in methods
         _register m, needs_list
@@ -102,7 +102,7 @@ class App.Controller
     @loaded_items.push item_name 
 
   has_needs_met: ->
-    return true unless @current_needs 
+    return true if _.isEmpty(@current_needs)
     has_everything = true
 
     for need in @current_needs
@@ -114,6 +114,10 @@ class App.Controller
     @res.json obj
 
   render: (view_name=null, data=@view_data) ->
+    if !@view_class
+      # console.log("render bailing, no view class set")
+      return false
+
     @before_render()
     if @cancel_render
       return @cancel_render = false

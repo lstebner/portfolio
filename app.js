@@ -22,7 +22,7 @@ Requires = {
 Requires.Schema = Requires.mongoose.Schema;
 
 App = (function() {
-  var CONF_DEFAULTS, express, fs;
+  var CONF_DEFAULTS, ROOT_DIR, express, fs;
 
   fs = Requires.fs, express = Requires.express;
 
@@ -36,6 +36,8 @@ App = (function() {
     port: 3000,
     debug: false
   };
+
+  ROOT_DIR = __dirname.replace(/spec(\/|)/, "");
 
   App.set_site = function(site) {
     this.site = site;
@@ -107,7 +109,7 @@ App = (function() {
 
   App.prototype.load_environment_config = function() {
     var contents, e, env_conf, filepath;
-    filepath = this.env === "test" ? __dirname + "/test.conf" : __dirname + "/app/conf/" + this.env + ".conf";
+    filepath = ROOT_DIR + "/app/conf/" + this.env + ".conf";
     contents = fs.readFileSync(filepath, "UTF-8");
     try {
       env_conf = JSON.parse(contents);
@@ -232,21 +234,22 @@ App = (function() {
         return _this.configure_for_development();
       };
     })(this));
-    return this.app.configure("production", (function(_this) {
+    this.app.configure("production", (function(_this) {
       return function() {
         _this.app.use(express.errorHandler());
         return _this.configure_for_production();
       };
     })(this));
+    return this.is_configured = true;
   };
 
   App.prototype.always_configure = function() {
-    this.app.set("views", __dirname + "/views");
+    this.app.set("views", ROOT_DIR + "/views");
     this.app.set("view engine", "jade");
     this.app.use(express.bodyParser());
     this.app.use(express.methodOverride());
     this.app.use(this.app.router);
-    return this.app.use(express["static"](__dirname + "/public"));
+    return this.app.use(express["static"](ROOT_DIR + "/public"));
   };
 
   App.prototype.configure_for_development = function() {
@@ -380,6 +383,93 @@ App.Router = (function() {
 
 })();
 
+App.View = (function() {
+  function View(data1, req1, res1, app) {
+    this.data = data1 != null ? data1 : {};
+    this.req = req1;
+    this.res = res1;
+    this.app = app;
+    this.js_opts = {};
+    this.default_data();
+    this.set_view(this.data.view);
+  }
+
+  View.prototype.default_data = function() {
+    this.data = _.extend({
+      layout: true,
+      title: App.conf("site_name"),
+      site_name: App.conf("site_name"),
+      meta: {
+        keywords: App.conf("site_keywords"),
+        description: App.conf("site_description")
+      },
+      this_url: this.req.url,
+      _: _,
+      view: 'index',
+      disqus_shortname: App.conf("disqus_shortname"),
+      cookies: null,
+      body_class: '',
+      single_upload_view: false,
+      this_url: this.req.url,
+      pagination_data: {},
+      uploads_filter: {},
+      load_more: true,
+      display_comments: false,
+      no_uploads_message: false,
+      css_version: App.conf("css_version"),
+      js_version: App.conf("js_version"),
+      base_url: App.base_url(),
+      auto_generated_id: this.auto_generate_id(),
+      js_opts: this.js_opts,
+      compiled_js: false
+    }, this.data);
+    return this.data;
+  };
+
+  View.prototype.auto_generate_id = function() {
+    return "auto_id_" + ((new Date()).getTime().toString(36));
+  };
+
+  View.prototype.add_js_opts = function(new_opts) {
+    if (new_opts == null) {
+      new_opts = {};
+    }
+    return this.js_opts = _.extend(this.js_opts, new_opts);
+  };
+
+  View.prototype.set_view = function(view) {
+    this.view = view;
+  };
+
+  View.prototype.set_data = function(key, val) {
+    return this.data[key] = val;
+  };
+
+  View.prototype.extend_data = function(more_data) {
+    if (more_data == null) {
+      more_data = {};
+    }
+    return this.data = _.extend(this.data, more_data);
+  };
+
+  View.prototype.js_block = function() {
+    return false;
+  };
+
+  View.prototype.render = function() {
+    if (this.data.js_opts) {
+      this.add_js_opts(this.data.js_opts);
+    }
+    this.data.compiled_js = this.js_block();
+    return this.res.render(this.view, _.extend(App.get_conf(), this.data, {
+      js_opts: JSON.stringify(this.js_opts)
+    }));
+  };
+
+  return View;
+
+})();
+
 App.Controller = (function() {
   Controller.prototype.name = "base";
 
@@ -419,7 +509,7 @@ App.Controller = (function() {
       };
     })(this);
     if (_.isObject(for_what)) {
-      methods = for_what.except != null ? _.difference(this.public_methods, for_what) : for_what.only != null ? _.intersection(this.public_methods, for_what) : void 0;
+      methods = for_what.except != null ? _.difference(this.public_methods, for_what.except) : for_what.only != null ? _.intersection(this.public_methods, for_what.only) : void 0;
       results = [];
       for (j = 0, len = methods.length; j < len; j++) {
         m = methods[j];
@@ -543,7 +633,7 @@ App.Controller = (function() {
 
   Controller.prototype.has_needs_met = function() {
     var has_everything, j, len, need, ref;
-    if (!this.current_needs) {
+    if (_.isEmpty(this.current_needs)) {
       return true;
     }
     has_everything = true;
@@ -565,6 +655,9 @@ App.Controller = (function() {
     }
     if (data == null) {
       data = this.view_data;
+    }
+    if (!this.view_class) {
+      return false;
     }
     this.before_render();
     if (this.cancel_render) {
@@ -592,93 +685,6 @@ App.Controller = (function() {
   };
 
   return Controller;
-
-})();
-
-App.View = (function() {
-  function View(data1, req1, res1, app) {
-    this.data = data1 != null ? data1 : {};
-    this.req = req1;
-    this.res = res1;
-    this.app = app;
-    this.js_opts = {};
-    this.default_data();
-    this.set_view(this.data.view);
-  }
-
-  View.prototype.default_data = function() {
-    this.data = _.extend({
-      layout: true,
-      title: App.conf("site_name"),
-      site_name: App.conf("site_name"),
-      meta: {
-        keywords: App.conf("site_keywords"),
-        description: App.conf("site_description")
-      },
-      this_url: this.req.url,
-      _: _,
-      view: 'index',
-      disqus_shortname: App.conf("disqus_shortname"),
-      cookies: null,
-      body_class: '',
-      single_upload_view: false,
-      this_url: this.req.url,
-      pagination_data: {},
-      uploads_filter: {},
-      load_more: true,
-      display_comments: false,
-      no_uploads_message: false,
-      css_version: App.conf("css_version"),
-      js_version: App.conf("js_version"),
-      base_url: App.base_url(),
-      auto_generated_id: this.auto_generate_id(),
-      js_opts: this.js_opts,
-      compiled_js: false
-    }, this.data);
-    return this.data;
-  };
-
-  View.prototype.auto_generate_id = function() {
-    return "auto_id_" + ((new Date()).getTime().toString(36));
-  };
-
-  View.prototype.add_js_opts = function(new_opts) {
-    if (new_opts == null) {
-      new_opts = {};
-    }
-    return this.js_opts = _.extend(this.js_opts, new_opts);
-  };
-
-  View.prototype.set_view = function(view) {
-    this.view = view;
-  };
-
-  View.prototype.set_data = function(key, val) {
-    return this.data[key] = val;
-  };
-
-  View.prototype.extend_data = function(more_data) {
-    if (more_data == null) {
-      more_data = {};
-    }
-    return this.data = _.extend(this.data, more_data);
-  };
-
-  View.prototype.js_block = function() {
-    return false;
-  };
-
-  View.prototype.render = function() {
-    if (this.data.js_opts) {
-      this.add_js_opts(this.data.js_opts);
-    }
-    this.data.compiled_js = this.js_block();
-    return this.res.render(this.view, _.extend(App.get_conf(), this.data, {
-      js_opts: JSON.stringify(this.js_opts)
-    }));
-  };
-
-  return View;
 
 })();
 
