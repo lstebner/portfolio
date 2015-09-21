@@ -380,6 +380,93 @@
 
   })();
 
+  App.View = (function() {
+    function View(data1, req1, res1, app1) {
+      this.data = data1 != null ? data1 : {};
+      this.req = req1;
+      this.res = res1;
+      this.app = app1;
+      this.js_opts = {};
+      this.default_data();
+      this.set_view(this.data.view);
+    }
+
+    View.prototype.default_data = function() {
+      this.data = _.extend({
+        layout: true,
+        title: App.conf("site_name"),
+        site_name: App.conf("site_name"),
+        meta: {
+          keywords: App.conf("site_keywords"),
+          description: App.conf("site_description")
+        },
+        this_url: this.req.url,
+        _: _,
+        view: 'index',
+        disqus_shortname: App.conf("disqus_shortname"),
+        cookies: null,
+        body_class: '',
+        single_upload_view: false,
+        this_url: this.req.url,
+        pagination_data: {},
+        uploads_filter: {},
+        load_more: true,
+        display_comments: false,
+        no_uploads_message: false,
+        css_version: App.conf("css_version"),
+        js_version: App.conf("js_version"),
+        base_url: App.base_url(),
+        auto_generated_id: this.auto_generate_id(),
+        js_opts: this.js_opts,
+        compiled_js: false
+      }, this.data);
+      return this.data;
+    };
+
+    View.prototype.auto_generate_id = function() {
+      return "auto_id_" + ((new Date()).getTime().toString(36));
+    };
+
+    View.prototype.add_js_opts = function(new_opts) {
+      if (new_opts == null) {
+        new_opts = {};
+      }
+      return this.js_opts = _.extend(this.js_opts, new_opts);
+    };
+
+    View.prototype.set_view = function(view) {
+      this.view = view;
+    };
+
+    View.prototype.set_data = function(key, val) {
+      return this.data[key] = val;
+    };
+
+    View.prototype.extend_data = function(more_data) {
+      if (more_data == null) {
+        more_data = {};
+      }
+      return this.data = _.extend(this.data, more_data);
+    };
+
+    View.prototype.js_block = function() {
+      return false;
+    };
+
+    View.prototype.render = function() {
+      if (this.data.js_opts) {
+        this.add_js_opts(this.data.js_opts);
+      }
+      this.data.compiled_js = this.js_block();
+      return this.res.render(this.view, _.extend(App.get_conf(), this.data, {
+        js_opts: JSON.stringify(this.js_opts)
+      }));
+    };
+
+    return View;
+
+  })();
+
   App.Controller = (function() {
     Controller.prototype.name = "base";
 
@@ -419,7 +506,7 @@
         };
       })(this);
       if (_.isObject(for_what)) {
-        methods = for_what.except != null ? _.difference(this.public_methods, for_what) : for_what.only != null ? _.intersection(this.public_methods, for_what) : void 0;
+        methods = for_what.except != null ? _.difference(this.public_methods, for_what.except) : for_what.only != null ? _.intersection(this.public_methods, for_what.only) : void 0;
         results = [];
         for (j = 0, len = methods.length; j < len; j++) {
           m = methods[j];
@@ -543,7 +630,7 @@
 
     Controller.prototype.has_needs_met = function() {
       var has_everything, j, len, need, ref;
-      if (!this.current_needs) {
+      if (_.isEmpty(this.current_needs)) {
         return true;
       }
       has_everything = true;
@@ -565,6 +652,9 @@
       }
       if (data == null) {
         data = this.view_data;
+      }
+      if (!this.view_class) {
+        return false;
       }
       this.before_render();
       if (this.cancel_render) {
@@ -592,93 +682,6 @@
     };
 
     return Controller;
-
-  })();
-
-  App.View = (function() {
-    function View(data1, req1, res1, app1) {
-      this.data = data1 != null ? data1 : {};
-      this.req = req1;
-      this.res = res1;
-      this.app = app1;
-      this.js_opts = {};
-      this.default_data();
-      this.set_view(this.data.view);
-    }
-
-    View.prototype.default_data = function() {
-      this.data = _.extend({
-        layout: true,
-        title: App.conf("site_name"),
-        site_name: App.conf("site_name"),
-        meta: {
-          keywords: App.conf("site_keywords"),
-          description: App.conf("site_description")
-        },
-        this_url: this.req.url,
-        _: _,
-        view: 'index',
-        disqus_shortname: App.conf("disqus_shortname"),
-        cookies: null,
-        body_class: '',
-        single_upload_view: false,
-        this_url: this.req.url,
-        pagination_data: {},
-        uploads_filter: {},
-        load_more: true,
-        display_comments: false,
-        no_uploads_message: false,
-        css_version: App.conf("css_version"),
-        js_version: App.conf("js_version"),
-        base_url: App.base_url(),
-        auto_generated_id: this.auto_generate_id(),
-        js_opts: this.js_opts,
-        compiled_js: false
-      }, this.data);
-      return this.data;
-    };
-
-    View.prototype.auto_generate_id = function() {
-      return "auto_id_" + ((new Date()).getTime().toString(36));
-    };
-
-    View.prototype.add_js_opts = function(new_opts) {
-      if (new_opts == null) {
-        new_opts = {};
-      }
-      return this.js_opts = _.extend(this.js_opts, new_opts);
-    };
-
-    View.prototype.set_view = function(view) {
-      this.view = view;
-    };
-
-    View.prototype.set_data = function(key, val) {
-      return this.data[key] = val;
-    };
-
-    View.prototype.extend_data = function(more_data) {
-      if (more_data == null) {
-        more_data = {};
-      }
-      return this.data = _.extend(this.data, more_data);
-    };
-
-    View.prototype.js_block = function() {
-      return false;
-    };
-
-    View.prototype.render = function() {
-      if (this.data.js_opts) {
-        this.add_js_opts(this.data.js_opts);
-      }
-      this.data.compiled_js = this.js_block();
-      return this.res.render(this.view, _.extend(App.get_conf(), this.data, {
-        js_opts: JSON.stringify(this.js_opts)
-      }));
-    };
-
-    return View;
 
   })();
 
@@ -796,7 +799,7 @@
 
   describe("App.Controller", function() {
     var check_values_in, j, len, thing;
-    before(function() {
+    beforeEach(function() {
       return test_controller = new App.Controller(test_req, test_res);
     });
     describe("#set_view", function() {
@@ -831,7 +834,7 @@
         });
       });
     }
-    return describe("#redirect", function() {
+    describe("#redirect", function() {
       it("should set the destination", function() {
         test_controller.redirect("/somewhere_else");
         return expect(test_res.redirect_dest).to.be("/somewhere_else");
@@ -843,6 +846,139 @@
       return it("should set the status to anything requested", function() {
         test_controller.redirect("/blahblah", 404);
         return expect(test_res.redirect_status).to.be(404);
+      });
+    });
+    describe("#requires", function() {
+      beforeEach(function() {
+        var k, len1, m, pub_methods;
+        pub_methods = ["pub_method1", "pub_method2", "pub_method3"];
+        for (k = 0, len1 = pub_methods.length; k < len1; k++) {
+          m = pub_methods[k];
+          test_controller[m] = function() {
+            return 1;
+          };
+        }
+        return test_controller.public_methods = pub_methods;
+      });
+      it("should have no requirements by default", function() {
+        return expect(test_controller.requirements_list).to.be.empty();
+      });
+      it("should add requirements for 'all' by default", function() {
+        var k, len1, r, ref, results;
+        test_controller.requires("apples");
+        ref = test_controller.requirements_list;
+        results = [];
+        for (k = 0, len1 = ref.length; k < len1; k++) {
+          r = ref[k];
+          results.push(expect(r).to.contain("apples"));
+        }
+        return results;
+      });
+      it("should add requirements for the requested method only", function() {
+        test_controller.requires("apples");
+        test_controller.requires("bananas", "pub_method1");
+        expect(test_controller.requirements_list["pub_method1"]).to.contain("bananas");
+        return expect(test_controller.requirements_list["pub_method2"]).to.not.contain("bananas");
+      });
+      it("should add requirements to only the methods requested", function() {
+        test_controller.requires("apples");
+        test_controller.requires("oranges", {
+          only: ["pub_method1", "pub_method2"]
+        });
+        expect(test_controller.requirements_list["pub_method1"]).to.contain("oranges");
+        return expect(test_controller.requirements_list["pub_method3"]).to.not.contain("oranges");
+      });
+      return it("should add requirements to all the methods except where requested", function() {
+        test_controller.requires("apples");
+        test_controller.requires("strawberries", {
+          except: ["pub_method1", "pub_method2"]
+        });
+        expect(test_controller.requirements_list["pub_method1"]).to.not.contain("strawberries");
+        return expect(test_controller.requirements_list["pub_method3"]).to.contain("strawberries");
+      });
+    });
+    describe("#loaded", function() {
+      return it("should add to loaded_items", function() {
+        expect(test_controller.loaded_items).to.not.contain("onions");
+        test_controller.loaded("onions");
+        return expect(test_controller.loaded_items).to.contain("onions");
+      });
+    });
+    describe("#has_needs_met", function() {
+      before(function() {
+        test_controller.pina_colada = function() {};
+        return test_controller.load = function(load_needs) {
+          this.load_needs = load_needs;
+        };
+      });
+      it("should be ok when there are no current needs", function() {
+        return expect(test_controller.has_needs_met()).to.be.ok();
+      });
+      return it("should set current_needs for requested method", function() {
+        test_controller.requires(["pineapples", "coconuts"], "pina_colada");
+        test_controller.preload("pina_colada");
+        expect(test_controller.current_needs.join("")).to.be(["pineapples", "coconuts"].join(""));
+        return it("should have called load with needs list", function() {
+          return expect(test_controller.load_needs).to.be("pineapples coconuts");
+        });
+      });
+    });
+    describe("#preload", function() {
+      before(function() {
+        test_controller.load = function(what) {
+          return this.loaded(what);
+        };
+        return test_controller.requires("watermelon", "testload");
+      });
+      it("should be ok if a method has no requirements", function() {
+        return expect(test_controller.preload("methodwithnorequirements")).to.be.ok();
+      });
+      it("should load a missing requirement");
+      it("should give up trying to load after timeout is reached if needs aren't met");
+      return it("should be able to load multiple items");
+    });
+    describe("#json", function() {
+      return it("should send json", function() {
+        test_controller.json({
+          some: "obj"
+        });
+        return expect(JSON.stringify(test_res.json_data)).to.be(JSON.stringify({
+          some: "obj"
+        }));
+      });
+    });
+    return describe("#render", function() {
+      it("should render the requested method by default", function() {
+        var result;
+        test_controller.requested_method = "onion_rings";
+        result = test_controller.render();
+        expect(result).to.be.ok();
+        return expect(test_controller.view_data.view).to.be("onion_rings");
+      });
+      it("should render the view_to_render when set", function() {
+        var result;
+        test_controller.view_to_render = "pineapple_rings";
+        result = test_controller.render();
+        expect(result).to.be.ok();
+        return expect(test_controller.view_data.view).to.be("pineapple_rings");
+      });
+      it("should render a requested view", function() {
+        var result;
+        result = test_controller.render("index");
+        expect(result).to.be.ok();
+        return expect(test_controller.view_data.view).to.be("index");
+      });
+      it("should not render when cancelled", function() {
+        var result;
+        test_controller.cancel_render = true;
+        result = test_controller.render("index");
+        return expect(result).to.be(false);
+      });
+      return it("should not render when there is no view class", function() {
+        var result;
+        test_controller.view_class = null;
+        result = test_controller.render("index");
+        return expect(result).to.be(false);
       });
     });
   });
