@@ -317,23 +317,25 @@ App.Models = {
 };
 
 App.Router = (function() {
-  Router.debug = true;
+  Router.debug = false;
 
   function Router(app, opts1) {
     this.app = app;
     this.opts = opts1 != null ? opts1 : {};
     if (!this.app) {
-      console.error("app required");
+      throw new Error("an app is required to create a Router");
     }
     this.routes = [];
   }
 
   Router.prototype.register = function(type, path, controller, method) {
+    var new_route;
     if (Router.debug) {
       console.log("router: add_route " + (type.toUpperCase()) + " " + path + ", " + controller.name + "#" + method);
     }
-    this.routes.push([type, path, controller, method]);
-    return this.app[type](path, (function(_this) {
+    new_route = [type, path, controller, method];
+    this.routes.push(new_route);
+    this.app[type](path, (function(_this) {
       return function(req, res) {
         var c;
         c = new controller(req, res);
@@ -343,6 +345,7 @@ App.Router = (function() {
         }
       };
     })(this));
+    return new_route;
   };
 
   Router.prototype.do_404 = function(res) {
